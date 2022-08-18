@@ -6,14 +6,17 @@ import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
 import { Provider } from 'react-redux'
-import store from './store/store'
-
+import store, { persistor } from './store/store'
+// import store from './store/store'
+import { PersistGate } from 'redux-persist/integration/react'
 
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <PersistGate persistor={persistor}>
+        <App />
+      </PersistGate>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

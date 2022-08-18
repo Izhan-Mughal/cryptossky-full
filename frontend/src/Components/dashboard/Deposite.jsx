@@ -76,84 +76,95 @@ function Deposite() {
   let web3;
 
   const formSubmit = async () => {
-    if (!ethereum.selectedAddress) {
-      if (typeof window.ethereum !== 'undefined') {
-        await ethereum.request({
-          method: 'eth_requestAccounts'
-        });
-        web3 = new Web3(window.web3.currentProvider)
-        setwalletBtn("Checkout")
-        showAlert(false)
-        detectChain()
-      } else {
-        alert("Please Install Meta Mask")
-      }
-    } else {
-      web3 = new Web3(window.web3.currentProvider)
-      let amount
-      plans.forEach(element => {
-        if (element.id = selectPlan) {
-          amount = element.amount
+    if (window.ethereum) {
+      if (!window.ethereum.selectedAddress) {
+        if (typeof window.ethereum !== 'undefined') {
+          await window.ethereum.request({
+            method: 'eth_requestAccounts'
+          });
+          web3 = new Web3(window.web3.currentProvider)
+          setwalletBtn("Checkout")
+          showAlert(false)
+          detectChain()
+        } else {
+          alert("Please Install Meta Mask")
         }
-      });
-      if (ethereum.networkVersion == '1' || 1) {
-
-        web3.eth.sendTransaction({
-          to: '0x2b58713E4d56eAB77826279CfAcFF2216C049103',
-          from: ethereum.selectedAddress,
-          value: web3.toWei(amount, 'tether'),
-          chainId: '0x1',
-
-        }, async (err, result) => {
-          if (err) {
-            showAlert(true, 'danger', 'Transaction Failed')
-          }
-          if (result) {
-            showAlert(true, 'info', `Please Wait ...`)
-            axios.post(`${config.baseURL}/buy-plan.php`, {
-              token: userState.token,
-              email: userState.email,
-              plan_id: selectPlan,
-            }).then((result) => {
-              showAlert(true, 'success', 'Transaction Success')
-              getHistory()
-            }).catch((error) => {
-              showAlert(true, 'danger', error)
-            })
-          }
-        })
       } else {
-        detectChain()
+        web3 = new Web3(window.web3.currentProvider)
+        let amount
+        plans.forEach(element => {
+          if (element.id = selectPlan) {
+            amount = element.amount
+          }
+        });
+        if (window.ethereum.networkVersion == '1' || 1) {
+
+          web3.eth.sendTransaction({
+            to: '0x2b58713E4d56eAB77826279CfAcFF2216C049103',
+            from: window.ethereum.selectedAddress,
+            value: web3.toWei(amount, 'ether'),
+            chainId: '0x1',
+
+          }, async (err, result) => {
+            if (err) {
+              showAlert(true, 'danger', 'Transaction Failed')
+            }
+            if (result) {
+              showAlert(true, 'info', `Please Wait ...`)
+              axios.post(`${config.baseURL}/buy-plan.php`, {
+                token: userState.token,
+                email: userState.email,
+                plan_id: selectPlan,
+              }).then((result) => {
+                showAlert(true, 'success', 'Transaction Success')
+                getHistory()
+              }).catch((error) => {
+                showAlert(true, 'danger', error)
+              })
+            }
+          })
+        } else {
+          detectChain()
+        }
       }
+    }else{
+      alert("Please Install Meta Mask")
     }
+
   }
 
 
   window.onload = () => {
-    if (ethereum.selectedAddress) {
-      setwalletBtn("Checkout ")
-      showAlert(false)
+    if (window.ethereum) {
+      if (window.ethereum.selectedAddress) {
+        setwalletBtn("Checkout ")
+        showAlert(false)
+      }
+      detectChain()
     }
-    detectChain()
   }
 
-  ethereum.on('accountsChanged', (account) => {
-    if (account.length == 0) {
-      showAlert(true, 'warning', 'Wallet disconnected !')
-      setwalletBtn("Connect Wallet")
-    }
-  });
+  if (window.ethereum) {
+    window.ethereum.on('accountsChanged', (account) => {
+      if (account.length == 0) {
+        showAlert(true, 'warning', 'Wallet disconnected !')
+        setwalletBtn("Connect Wallet")
+      }
+    });
+  }
 
-  ethereum.on('chainChanged', (chainId) => {
-    if (chainId != '0x1') {
-      showAlert(true, 'danger', 'Change your network to Mainnet')
-    } else {
-      showAlert(false)
-    }
-  });
+  if (window.ethereum) {
+    window.ethereum.on('chainChanged', (chainId) => {
+      if (chainId != '0x1') {
+        showAlert(true, 'danger', 'Change your network to Mainnet')
+      } else {
+        showAlert(false)
+      }
+    });
+  }
 
   const detectChain = (chain = null) => {
-    if (ethereum.networkVersion != '1') {
+    if (window.ethereum.networkVersion != '1') {
       showAlert(true, 'danger', 'Change your network to Mainnet')
     } else {
       showAlert(false)

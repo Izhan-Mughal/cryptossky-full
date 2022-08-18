@@ -15,7 +15,7 @@ function HeaderDashboard() {
 
       <Navbar variant="dark" expand="lg">
         <div className='container ws-container'>
-          <Link to='deposit' className="navbar-brand">
+          <Link to='/dashboard' className="navbar-brand">
             <img src="/assets/images/logo-white.png" className='ms-lg-3' alt="" />
           </Link>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />

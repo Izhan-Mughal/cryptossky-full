@@ -12,12 +12,21 @@ import config from '../../config'
 
 
 
+const columns = [
+    { field: 'id', headerName: 'Id no.', width: 80 },
+    { field: 'billing_name', headerName: 'Billing Name', width: 170 },
+    { field: 'amount', headerName: 'Amount', width: 170 },
+    { field: 'payment_status', headerName: 'Payment Status', width: 170 },
+];
+
+
 
 function Profile() {
 
     const userState = useSelector(selectUser)
 
     const [userinfo, setuserinfo] = useState([])
+    const [history, sethistory] = useState([])
 
 
     const getUser = async () => {
@@ -30,10 +39,28 @@ function Profile() {
         })
     }
 
+    const getHistory = async () => {
+        sethistory([])
+        axios.post(`${config.baseURL}/get-history.php`, {
+            token: userState.token,
+            email: userState.email,
+        }).then(async (response) => {
+            let response_data = response.data
+            let tempArr = []
+            response_data.forEach(element => {
+                tempArr.push(
+                    {  id: "#" + element.history.id, billing_name: element.user.name, amount: element.plan.amount, payment_status: element.history.status == 1 ? "Payed" : "Canceled" },
+                )
+            });
+            sethistory(tempArr)
+        })
+    }
+
 
 
     useEffect(() => {
         getUser()
+        getHistory()
     }, [])
 
     return (
@@ -53,24 +80,78 @@ function Profile() {
                         <div className="ws-side-main">
                             <div className="ps-lg-4">
                                 <div className="d-flex align-items-center justify-content-between pt-3 pb-4">
-                                    <span className='fs-6 fw-500 text-light'>Profile</span>
+                                    <span className='fs-6 fw-500 text-light'>PROFILE</span>
                                     <span className='fs-7 text-light '> <Link to="dashboard" className='text-light text-faded text-decoration-none'>Dashboard </Link>   <span className='text-faded fs-8'>/</span>  <Link to="profile" className='text-light text-faded text-decoration-none'>Profile</Link></span>
                                 </div>
-                                <div className="w-100">
-                                    <div className="card ws-card mb-4 p-4" bis_skin_checked={1}>
-                                        <div className="card-body">
-                                            <div className="w-100 d-flex flex-column align-items-center">
-                                                <img src="assets/images/user_img.png" className='profile-avater' alt="" />
-                                                <h6 className='mt-4 text-dark'>{userinfo?.email}</h6>
+                                <div className="w-100 pt-3">
+                                    <div className="row mx-0">
+                                        <div className="col-lg-3 col-12 px-0">
+                                            <div className="card ws-card p-4 mb-4">
+                                                <div className="card-body">
+                                                    <div className="w-100 d-flex flex-column align-items-center">
+                                                        <img src="assets/images/user_img.png" className='profile-avater' alt="" />
+                                                        <h6 className='mt-4 text-dark text-capitalize'>{userinfo?.name}</h6>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div className="w-100 d-flex flex-column ">
-                                                <span className='mt-4 text-dark'>Personal Information</span>
-                                                <span className='fs-8 mt-3 text-faded' style={{lineHeight:"10px"}}>Email Address</span>
-                                                <span className=' fs-7 text-dark'>{userinfo?.email}</span>
-                                                <span className='fs-8 mt-3 text-faded' style={{lineHeight:"10px"}}>Phone number</span>
-                                                <span className=' fs-7 text-dark'>{userinfo?.phone}</span>
-                                                <span className='fs-8 mt-3 text-faded' style={{lineHeight:"10px"}}>Office Address</span>
-                                                <span className=' fs-7 text-dark'>User Address here...</span>
+                                            <div className="card ws-card p-2 mb-4">
+                                                <div className="card-body py-1 ">
+                                                    <div className="w-100 d-flex flex-column ">
+                                                        <span className=' text-dark'>Personal Information</span>
+                                                        <span className='fs-8 mt-3 text-faded' style={{ lineHeight: "10px" }}>Email Address</span>
+                                                        <span className=' fs-7 text-dark'>{userinfo?.email}</span>
+                                                        <span className='fs-8 mt-3 text-faded' style={{ lineHeight: "10px" }}>Name</span>
+                                                        <span className=' fs-7 text-dark'>{userinfo?.name}</span>
+                                                        <span className='fs-8 mt-3 text-faded' style={{ lineHeight: "10px" }}>Phone number</span>
+                                                        <span className=' fs-7 text-dark'>{userinfo?.phone}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-lg-9 col-12 px-0 ps-lg-2">
+                                            <div className="row mx-0 w-100">
+                                                <div className="col-lg-4 col-12 ps-lg-3 pe-lg-2 px-0">
+                                                    <div className="card ws-card px-3 py-3 mb-4 d-flex flex-column">
+                                                        <div className="d-flex align-items-center justify-content-between">
+                                                            <span className='text-faded fs-7'>Account Balance</span>
+                                                            <span className='text-faded fs-7'>0.00 %</span>
+                                                        </div>
+                                                        <span className='text-faded fs-5 fw-500'>0.00 USDT</span>
+                                                    </div>
+                                                </div>
+                                                <div className="col-lg-4 col-12 px-lg-3 px-0">
+                                                    <div className="card ws-card px-3 py-3 mb-4 d-flex flex-column">
+                                                        <div className="d-flex align-items-center justify-content-between">
+                                                            <span className='text-faded fs-7'>Total Deposits</span>
+                                                            <span className='text-faded fs-7'>0.00 %</span>
+                                                        </div>
+                                                        <span className='text-faded fs-5 fw-500'>0.00 USDT</span>
+                                                    </div>
+                                                </div>
+                                                <div className="col-lg-4 col-12 pe-lg-3 ps-lg-2 px-0">
+                                                    <div className="card ws-card px-3 py-3 mb-4 d-flex flex-column">
+                                                        <div className="d-flex align-items-center justify-content-between">
+                                                            <span className='text-faded fs-7'>Total Earnings</span>
+                                                            <span className='text-faded fs-7'>0.00 %</span>
+                                                        </div>
+                                                        <span className='text-faded fs-5 fw-500'>0.00 USDT</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="row mx-0 w-100">
+                                                <div className="col-lg-12 col-12 px-lg-3 px-0">
+                                                    <div className="card ws-card px-3 py-3 mb-4 d-flex flex-column">
+                                                        <Box sx={{ height: 500, width: '100%' }}>
+                                                            <DataGrid
+                                                                rows={history}
+                                                                columns={columns}
+                                                                pageSize={12}
+                                                                rowsPerPageOptions={[10]}
+                                                                disableSelectionOnClick
+                                                            />
+                                                        </Box>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

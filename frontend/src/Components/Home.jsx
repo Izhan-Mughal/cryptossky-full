@@ -7,7 +7,7 @@ export default function Home() {
     <>
 
       <div>
-        <div id="loader-wrapper">
+        {/* <div id="loader-wrapper">
           <div id="loading-center-absolute">
             <div className="object" id="object_four" />
             <div className="object" id="object_three" />
@@ -16,7 +16,7 @@ export default function Home() {
           </div>
           <div className="loader-section section-left" />
           <div className="loader-section section-right" />
-        </div>
+        </div> */}
         <section id="home_section" className="section_banner bg_navy_blue banner_full_height" data-z-index={1} data-parallax="scroll" data-image-src="assets/images/banner_bg2.png">
           <Header />
           <div id="banner_bg_effect" className="banner_effect" />

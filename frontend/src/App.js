@@ -9,12 +9,21 @@ import Forget from './Components/Forget';
 import Deposite from './Components/dashboard/Deposite';
 import Transaction from './Components/dashboard/Transaction';
 import Profile from './Components/dashboard/Profile';
+import Dashboard from './Components/dashboard/Dashboard';
 import Register from './Components/Register'
 import { useSelector } from 'react-redux';
 import { selectUser } from './features/userSlice';
 import Terms from './Components/Terms';
+import Withdraw from './Components/dashboard/Withdraw';
+import { useEffect } from 'react';
 
 function App() {
+
+  // useEffect(() => {
+  //   setInterval(() => {
+  //     console.clear();
+  //   }, 1000);
+  // }, [])
 
   const userState = useSelector(selectUser)
 
@@ -67,6 +76,22 @@ function App() {
                 <Redirect to='/' />
                 :
                 <Profile />
+            }
+          </Route>
+          <Route exact path='/dashboard'>
+            {
+              userState == null ?
+                <Redirect to='/' />
+                :
+                <Dashboard />
+            }
+          </Route>
+          <Route exact path='/withdraw'>
+            {
+              userState == null ?
+                <Redirect to='/' />
+                :
+                <Withdraw />
             }
           </Route>
         </Switch>

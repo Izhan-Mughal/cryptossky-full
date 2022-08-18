@@ -7,10 +7,10 @@ function SidebarDashboard() {
             <span className='fs-8 ps-3'>MENU</span>
             <div class="ws-sidebar-menu" id="side-menu">
                 <li>
-                    <a class="waves-effect">
+                    <Link to="dashboard" class="waves-effect ">
                         <i class="mdi mdi-airplay"></i>
                         <span>Dashboard</span>
-                    </a>
+                    </Link>
                 </li>
 
                 <li class="mm-active">
@@ -21,10 +21,10 @@ function SidebarDashboard() {
                 </li>
 
                 <li>
-                    <a class=" waves-effect">
+                    <Link to="withdraw" class="waves-effect ">
                         <i class="mdi mdi-cash-multiple"></i>
                         <span>Withdraw</span>
-                    </a>
+                    </Link>
                 </li>
 
                 <li>
