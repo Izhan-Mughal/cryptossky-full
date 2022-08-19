@@ -16,6 +16,8 @@ import { selectUser } from './features/userSlice';
 import Terms from './Components/Terms';
 import Withdraw from './Components/dashboard/Withdraw';
 import { useEffect } from 'react';
+import About from './Components/About';
+import Invest from './Components/Invest';
 
 function App() {
 
@@ -39,6 +41,12 @@ function App() {
           </Route>
           <Route exact path='/term-of-service'>
             <Terms />
+          </Route>
+          <Route exact path='/about'>
+            <About />
+          </Route>
+          <Route exact path='/invest'>
+            <Invest />
           </Route>
           <Route exact path='/login'>
             {

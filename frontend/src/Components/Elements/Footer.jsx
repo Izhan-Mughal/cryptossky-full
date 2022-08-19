@@ -4,10 +4,10 @@ import { Helmet } from "react-helmet";
 export default function Footer() {
 
 
-  
-    return (
-  <>
-        <footer>
+
+  return (
+    <>
+      <footer>
         <div className="top_footer bg_navy_blue" data-z-index={1} data-parallax="scroll" data-image-src="assets/images/footer_bg.png">
           <div className="container">
             <div className="row">
@@ -34,24 +34,24 @@ export default function Footer() {
         </div>
       </footer>
       <Helmet>
-                {/* <script src="assets/js/jquery-1.12.4.min.js"></script> */}
-                {/* <link rel="stylesheet" href="assets/owlcarousel/css/owl.owl.theme.default.min.css" /> */}
-                {/* <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" /> */}
-                {/* <link rel="stylesheet" href="assets/owlcarousel/css/owl.carousel.min.css" /> */}
-                {/* <script src="assets/bootstrap/js/bootstrap.min.js"></script> */}
-                {/* <script src="assets/owlcarousel/js/owl.carousel.min.js"></script> */}
-                {/* <script src="assets/js/magnific-popup.min.js"></script> */}
-                {/* <script src="assets/js/waypoints.min.js"></script> */}
-                {/* <script src="assets/js/parallax.js"></script> */}
-                {/* <script src="assets/js/bootstrap.bundle.js"></script> */}
-                {/* <script src="assets/js/jquery.countdown.min.js"></script> */}
-                {/* <script src="assets/js/particles.min.js"></script> */}
-                {/* <script src="assets/js/jquery.dd.min.js"></script> */}
-                {/* <script src="assets/js/jquery.counterup.min.js"></script> */}
-                {/* <script src="assets/js/spop.min.js"></script> */}
-                {/* <script src="assets/js/notification.js"></script> */}
-                {/* <script src="assets/js/scripts.js"></script> */}
-            </Helmet>
-  </>
-    )
-}
+        <script src="assets/js/jquery-1.12.4.min.js"></script>
+        <link rel="stylesheet" href="assets/owlcarousel/css/owl.owl.theme.default.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="assets/owlcarousel/css/owl.carousel.min.css" />
+        <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+        <script src="assets/owlcarousel/js/owl.carousel.min.js"></script>
+        <script src="assets/js/magnific-popup.min.js"></script>
+        <script src="assets/js/waypoints.min.js"></script>
+        <script src="assets/js/parallax.js"></script>
+        <script src="assets/js/bootstrap.bundle.js"></script>
+        <script src="assets/js/jquery.countdown.min.js"></script>
+        <script src="assets/js/particles.min.js"></script>
+        <script src="assets/js/jquery.dd.min.js"></script>
+        <script src="assets/js/jquery.counterup.min.js"></script>
+        <script src="assets/js/spop.min.js"></script>
+        <script src="assets/js/notification.js"></script>
+        <script src="assets/js/scripts.js"></script>
+      </Helmet>
+    </>
+  )
+  }

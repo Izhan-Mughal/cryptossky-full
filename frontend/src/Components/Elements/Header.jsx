@@ -72,12 +72,11 @@ export default function Header() {
                                     <a className="nav-link active" href="/">Home</a>
                                 </li>
                                 <li className="animation animated fadeInDown" data-animation="fadeInDown" data-animation-delay="1.2s" style={{ animationDelay: '1.2s', opacity: 1 }}>
-                                    <a className="nav-link page-scroll dropdown-toggle" href="#" data-toggle="dropdown">About</a>
+                                    <a className="nav-link page-scroll dropdown-toggle"  data-toggle="dropdown">About</a>
                                     <div className="dropdown-menu">
                                         <ul className="list_none ps-0">
-                                            <li><a className="dropdown-item nav-link page-scroll nav_item" href="#about">About Cryptossky</a></li>
-                                            <li><a className="dropdown-item nav-link page-scroll nav_item" href="#service">IT IS SAFE INVEST IN CRYPTOSSKY?</a></li>
-                                            <li><a className="dropdown-item nav-link page-scroll nav_item" href="#">KNOWING OUR BONUS</a></li>
+                                            <li><Link className="dropdown-item nav-link page-scroll nav_item" to="/about">About Cryptossky</Link></li>
+                                            <li><Link className="dropdown-item nav-link page-scroll nav_item" to="/invest">IT IS SAFE INVEST IN CRYPTOSSKY?</Link></li>
                                         </ul>
                                     </div>
                                 </li>
