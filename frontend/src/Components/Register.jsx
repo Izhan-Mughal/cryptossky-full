@@ -6,7 +6,7 @@ import Header from './Elements/Header'
 import config from '../config'
 import axios from 'axios'
 import Footer from './Elements/Footer'
-import {useHistory} from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 
 export default function register() {
@@ -19,6 +19,7 @@ export default function register() {
   const [confirmPassword, setconfirmPassword] = useState("")
   const [terms, setterms] = useState(false)
   const [error, seterror] = useState("")
+  const [loader, setloader] = useState(0)
 
   const dispatch = useDispatch()
 
@@ -26,7 +27,7 @@ export default function register() {
     return /\S+@\S+\.\S+/.test(email);
   }
 
-  const formSubmit = () => {
+  const formSubmit = async () => {
 
     if (name.split("").length < 3) {
       seterror({ variant: "danger", data: "Name Should contain atleast 3 chracter" })
@@ -47,27 +48,34 @@ export default function register() {
               if (terms != true) {
                 seterror({ variant: "danger", data: "Agree terms and conditions" })
               } else {
-                axios.post(`${config.baseURL}/register.php`,{
-                    name,
-                    email,
-                    phone,
-                    password
+                setloader(1)
+                await axios.post(`${config.baseURL}/register_user.php`, {
+                  name,
+                  email,
+                  phone,
+                  password
                 }).then((result) => {
                   let getData = result.data
                   console.log(getData);
-                  if(getData.status == 'false'){
+                  if (getData.status == 'false') {
                     seterror({ variant: "danger", data: getData.data })
                   }
-                  if(getData.status == 'true'){
+                  if (getData.status == 'true') {
                     seterror({ variant: "success", data: getData.data.message })
                     dispatch(login({
                       email,
-                      token:getData.data.token,
-                      loginStatus: 2
+                      token: getData.data.token,
+                      loginStatus: 1
                     }))
-                    history.push('/')
+                    setname("");
+                    setemail("");
+                    setphone("");
+                    setpassword("");
+                    setconfirmPassword("");
+                    history.push('/verify')
                   }
                 })
+                setloader(0)
               }
             }
           }
@@ -82,7 +90,7 @@ export default function register() {
 
   return (
     <div>
-      <div id="loader-wrapper">
+      {/* <div id="loader-wrapper">
         <div id="loading-center-absolute">
           <div className="object" id="object_four" />
           <div className="object" id="object_three" />
@@ -91,13 +99,13 @@ export default function register() {
         </div>
         <div className="loader-section section-left" />
         <div className="loader-section section-right" />
-      </div>
+      </div> */}
       {/* END LOADER */}
       {/* START HEADER */}
       {/* END HEADER */}
       {/* START SECTION BANNER */}
       <section className="section_breadcrumb bg_navy_blue" data-z-index={1} data-parallax="scroll" data-image-src="assets/images/home_banner_bg.png">
-      <Header />
+        <Header />
         <div className="container">
           <div className="row">
             <div className="col-lg-12 col-md-12 col-sm-12">
@@ -152,7 +160,15 @@ export default function register() {
                       </div>
                     </div>
                     <div className="form-group col-md-12 text-center animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="1s" style={{ animationDelay: '1s', opacity: 1 }}>
-                      <button className="btn btn-default btn-radius" onClick={() => formSubmit()} name="reg_user">Submit</button>
+                      <button className="btn btn-default btn-radius" type="submit" name="login_user" onClick={() => formSubmit()}>
+                        Submit
+                        {
+                          loader == 1 &&
+                          <div class="spinner-border spinner-border-sm ms-2" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                          </div>
+                        }
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -167,10 +183,10 @@ export default function register() {
       </section>
       {/* END SECTION SIGN UP */}
       {/* START FOOTER SECTION */}
-     
+
       {/* END FOOTER SECTION */}
       <a href="#" className="scrollup btn-default" style={{ display: 'none' }}><i className="ion-ios-arrow-up" /></a>
-      <Footer/>
+      <Footer />
     </div>
   )
 }

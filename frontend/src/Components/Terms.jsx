@@ -6,7 +6,7 @@ export default function Terms() {
   return (
     <div>
       {/* START LOADER */}
-      <div id="loader-wrapper">
+      {/* <div id="loader-wrapper">
         <div id="loading-center-absolute">
           <div className="object" id="object_four" />
           <div className="object" id="object_three" />
@@ -15,7 +15,7 @@ export default function Terms() {
         </div>
         <div className="loader-section section-left" />
         <div className="loader-section section-right" />
-      </div>
+      </div> */}
       {/* END LOADER */}
       {/* START HEADER */}
 

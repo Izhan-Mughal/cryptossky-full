@@ -38,19 +38,19 @@ export default function Header() {
     // }
     // window.addEventListener('scroll', changevalueonScroll);
     const myFunc1 = () => {
-    //     // document.querySelector('.hello').style.backgroundColor = '#121a6d';
-    //     const i = document.querySelector('.hello');
-    //     const scrollvalue = document.documentElement.scrollTop;
-    //     if (scrollvalue < 50 || i.style.backgroundColor == 'rgb(18, 26, 109)') {
-    //         i.style.backgroundColor = 'hsla(120,100%,50%,0);'
-    //         // i.style.backgroundColor = 'transparent';
+        //     // document.querySelector('.hello').style.backgroundColor = '#121a6d';
+        //     const i = document.querySelector('.hello');
+        //     const scrollvalue = document.documentElement.scrollTop;
+        //     if (scrollvalue < 50 || i.style.backgroundColor == 'rgb(18, 26, 109)') {
+        //         i.style.backgroundColor = 'hsla(120,100%,50%,0);'
+        //         // i.style.backgroundColor = 'transparent';
 
 
-    //     }
-    //     else {
-    //         i.style.backgroundColor = 'rgb(18, 26, 109)';
+        //     }
+        //     else {
+        //         i.style.backgroundColor = 'rgb(18, 26, 109)';
 
-    //     }
+        //     }
     }
     // "header_wrap fixed-top pt-lg-4"
     return (
@@ -72,7 +72,7 @@ export default function Header() {
                                     <a className="nav-link active" href="/">Home</a>
                                 </li>
                                 <li className="animation animated fadeInDown" data-animation="fadeInDown" data-animation-delay="1.2s" style={{ animationDelay: '1.2s', opacity: 1 }}>
-                                    <a className="nav-link page-scroll dropdown-toggle"  data-toggle="dropdown">About</a>
+                                    <a className="nav-link page-scroll dropdown-toggle" data-toggle="dropdown">About</a>
                                     <div className="dropdown-menu">
                                         <ul className="list_none ps-0">
                                             <li><Link className="dropdown-item nav-link page-scroll nav_item" to="/about">About Cryptossky</Link></li>
@@ -109,13 +109,14 @@ export default function Header() {
 
                                 <li className="animation animated fadeInDown" data-animation="fadeInDown" data-animation-delay="2s" style={{ animationDelay: '2s', opacity: 1 }}>
                                     {
-                                        userState == null ?
-                                            <Link className="btn btn-default btn-radius nav_item" to="/login">Login</Link>
-                                            :
+                                        userState?.loginStatus == 2 ?
                                             <>
                                                 <Link className="btn btn-default btn-radius nav_item" to="/dashboard">Dashboard</Link>
                                                 <button onClick={() => dispatch(logout())} className="btn btn-default btn-radius nav_item" to="/login" style={{ fontSize: "14px !important" }}>Logout</button>
                                             </>
+                                            :
+                                            <Link className="btn btn-default btn-radius nav_item" to="/login">Login</Link>
+
                                     }
                                 </li>
                             </ul>

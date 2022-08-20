@@ -27,6 +27,7 @@ function Profile() {
 
     const [userinfo, setuserinfo] = useState([])
     const [history, sethistory] = useState([])
+    const [balance, setbalance] = useState([])
 
 
     const getUser = async () => {
@@ -49,10 +50,20 @@ function Profile() {
             let tempArr = []
             response_data.forEach(element => {
                 tempArr.push(
-                    {  id: "#" + element.history.id, billing_name: element.user.name, amount: element.plan.amount, payment_status: element.history.status == 1 ? "Payed" : "Canceled" },
+                    { id: "#" + element.history.id, billing_name: element.user.name, amount: element.plan.amount, payment_status: element.history.status == 1 ? "Payed" : "Canceled" },
                 )
             });
             sethistory(tempArr)
+        })
+    }
+
+
+    const getBalance = async () => {
+        axios.post(`${config.baseURL}/account-blance.php`, {
+            token: userState.token,
+            email: userState.email,
+        }).then(async (response) => {
+            setbalance(await response.data)
         })
     }
 
@@ -61,6 +72,7 @@ function Profile() {
     useEffect(() => {
         getUser()
         getHistory()
+        getBalance()
     }, [])
 
     return (
@@ -110,31 +122,34 @@ function Profile() {
                                         </div>
                                         <div className="col-lg-9 col-12 px-0 ps-lg-2">
                                             <div className="row mx-0 w-100">
-                                                <div className="col-lg-4 col-12 ps-lg-3 pe-lg-2 px-0">
-                                                    <div className="card ws-card px-3 py-3 mb-4 d-flex flex-column">
-                                                        <div className="d-flex align-items-center justify-content-between">
+                                                <div className="col-lg-3 col-12 ps-lg-3 px-0">
+                                                    <div className="card ws-card px-3 py-3 mb-4 d-flex flex-column align-items-start">
+                                                        <div className="d-flex align-items-center justify-content-between ">
                                                             <span className='text-faded fs-7'>Account Balance</span>
-                                                            <span className='text-faded fs-7'>0.00 %</span>
                                                         </div>
-                                                        <span className='text-faded fs-5 fw-500'>0.00 USDT</span>
+                                                        <span className='text-faded fs-5 fw-500'>{parseFloat(balance?.balance)} USDT</span>
+                                                        <span className="ws-badge mt-2 badge-soft-success ">Account Balance</span>
                                                     </div>
                                                 </div>
-                                                <div className="col-lg-4 col-12 px-lg-3 px-0">
-                                                    <div className="card ws-card px-3 py-3 mb-4 d-flex flex-column">
+                                                <div className="col-lg-3 col-12 px-lg-3 px-0">
+                                                    <div className="card ws-card px-3 py-3 mb-4 d-flex flex-column align-items-start">
                                                         <div className="d-flex align-items-center justify-content-between">
                                                             <span className='text-faded fs-7'>Total Deposits</span>
-                                                            <span className='text-faded fs-7'>0.00 %</span>
                                                         </div>
-                                                        <span className='text-faded fs-5 fw-500'>0.00 USDT</span>
+                                                        <span className='text-faded fs-5 fw-500'>{parseFloat(balance?.deposit)} USDT</span>
+                                                        <span className="ws-badge mt-2 badge-soft-warning ">Deposits Amount</span>
                                                     </div>
                                                 </div>
-                                                <div className="col-lg-4 col-12 pe-lg-3 ps-lg-2 px-0">
-                                                    <div className="card ws-card px-3 py-3 mb-4 d-flex flex-column">
+                                                <div className="col-lg-6 col-12  ps-lg-2 pe-lg-3">
+                                                    <div className="card ws-card px-3 py-3 mb-4 d-flex flex-column align-items-start">
                                                         <div className="d-flex align-items-center justify-content-between">
                                                             <span className='text-faded fs-7'>Total Earnings</span>
-                                                            <span className='text-faded fs-7'>0.00 %</span>
                                                         </div>
-                                                        <span className='text-faded fs-5 fw-500'>0.00 USDT</span>
+                                                        <span className='text-faded fs-5 fw-500'>{parseFloat(balance?.earning)} USDT</span>
+                                                        <div className="d-flex align-items-center mt-2">
+                                                            <span className="ws-badge  badge-soft-primary ">Account Earning</span>
+                                                            <span className='ps-2' style={{ fontSize: "12px", lineHeight: "15px" }}>Pending <strong className='fw-600'> {parseFloat(balance?.pending)} USDT</strong> </span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

@@ -155,7 +155,7 @@ function Dashboard() {
                                                         <div className="d-flex align-items-center justify-content-between ">
                                                             <span className='text-faded fs-7'>Account Balance</span>
                                                         </div>
-                                                        <span className='text-faded fs-5 fw-500'>{parseFloat(balance?.balance).toFixed(4)} USDT</span>
+                                                        <span className='text-faded fs-5 fw-500'>{parseFloat(balance?.balance)} USDT</span>
                                                         <span className="ws-badge mt-2 badge-soft-success ">Account Balance</span>
                                                     </div>
                                                 </div>
@@ -164,7 +164,7 @@ function Dashboard() {
                                                         <div className="d-flex align-items-center justify-content-between">
                                                             <span className='text-faded fs-7'>Total Deposits</span>
                                                         </div>
-                                                        <span className='text-faded fs-5 fw-500'>{parseFloat(balance?.deposit).toFixed(4)} USDT</span>
+                                                        <span className='text-faded fs-5 fw-500'>{parseFloat(balance?.deposit)} USDT</span>
                                                         <span className="ws-badge mt-2 badge-soft-warning ">Deposits Amount</span>
                                                     </div>
                                                 </div>
@@ -173,10 +173,10 @@ function Dashboard() {
                                                         <div className="d-flex align-items-center justify-content-between">
                                                             <span className='text-faded fs-7'>Total Earnings</span>
                                                         </div>
-                                                        <span className='text-faded fs-5 fw-500'>{parseFloat(balance?.earning).toFixed(4)} USDT</span>
+                                                        <span className='text-faded fs-5 fw-500'>{parseFloat(balance?.earning)} USDT</span>
                                                         <div className="d-flex align-items-center mt-2">
                                                             <span className="ws-badge  badge-soft-primary ">Account Earning</span>
-                                                            <span className='ps-2' style={{ fontSize: "12px" ,lineHeight: "15px" }}>Pending <strong className='fw-600'> {parseFloat(balance?.pending).toFixed(4)} USDT</strong> </span>
+                                                            <span className='ps-2' style={{ fontSize: "12px" ,lineHeight: "15px" }}>Pending <strong className='fw-600'> {parseFloat(balance?.pending)} USDT</strong> </span>
                                                         </div>
                                                     </div>
                                                 </div>

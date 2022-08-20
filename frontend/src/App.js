@@ -18,6 +18,7 @@ import Withdraw from './Components/dashboard/Withdraw';
 import { useEffect } from 'react';
 import About from './Components/About';
 import Invest from './Components/Invest';
+import Verify from './Components/Verify';
 
 function App() {
 
@@ -50,8 +51,16 @@ function App() {
           </Route>
           <Route exact path='/login'>
             {
-              userState == null ?
+              userState?.loginStatus == 2 ?
+                <Redirect to='/' />
+                :
                 <Login />
+            }
+          </Route>
+          <Route exact path='/verify'>
+            {
+              userState?.loginStatus == 1 ?
+                <Verify />
                 :
                 <Redirect to='/' />
             }
@@ -64,42 +73,42 @@ function App() {
           </Route>
           <Route exact path='/deposit'>
             {
-              userState == null ?
-                <Redirect to='/' />
-                :
+              userState?.loginStatus == 2 ?
                 <Deposite />
+                :
+                <Redirect to='/' />
             }
           </Route>
           <Route exact path='/transaction'>
             {
-              userState == null ?
-                <Redirect to='/' />
-                :
+              userState?.loginStatus == 2 ?
                 <Transaction />
+                :
+                <Redirect to='/' />
             }
           </Route>
           <Route exact path='/profile'>
             {
-              userState == null ?
-                <Redirect to='/' />
-                :
+              userState?.loginStatus == 2 ?
                 <Profile />
+                :
+                <Redirect to='/' />
             }
           </Route>
           <Route exact path='/dashboard'>
             {
-              userState == null ?
-                <Redirect to='/' />
-                :
+              userState?.loginStatus == 2 ?
                 <Dashboard />
+                :
+                <Redirect to='/' />
             }
           </Route>
           <Route exact path='/withdraw'>
             {
-              userState == null ?
-                <Redirect to='/' />
-                :
+              userState?.loginStatus == 2 ?
                 <Withdraw />
+                :
+                <Redirect to='/' />
             }
           </Route>
         </Switch>

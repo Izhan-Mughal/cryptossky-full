@@ -4,67 +4,61 @@ import config from '../config'
 import axios from 'axios'
 import { useHistory, Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { login } from '../features/userSlice'
+import { login, selectUser } from '../features/userSlice'
 import Footer from './Elements/Footer'
 
-export default function Login() {
+export default function Verify() {
 
   const history = useHistory()
-  const [email, setemail] = useState("")
-  const [password, setpassword] = useState("")
+  const [code, setcode] = useState("")
   const [error, seterror] = useState("")
   const [loader, setloader] = useState(0)
 
 
   const dispatch = useDispatch()
 
-  function isValidEmail(email) {
-    return /\S+@\S+\.\S+/.test(email);
+  const userState = useSelector(selectUser)
+
+  const get_otp = () => {
+     axios.post(`${config.baseURL}/get-otp.php`, {
+      email: userState.email
+    }).then((result) => {
+      let getData = result.data
+      if (getData.status == 'false') {
+        seterror({ variant: "danger", data: getData.data })
+      }
+      if (getData.status == 'true') {
+        seterror({ variant: "success", data: getData.data.message })
+      }
+    })
   }
 
   const formSubmit = async () => {
 
-    if (!isValidEmail(email)) {
-      seterror({ variant: "danger", data: "Wrong Email Pattern" })
+    if (code.split("").length != 6) {
+      seterror({ variant: "danger", data: "Invalid Code" })
     } else {
-      if (password.split("").length == 0) {
-        seterror({ variant: "danger", data: "Enter Password" })
-      } else {
-        setloader(1)
-        await axios.post(`${config.baseURL}/login.php`, {
-          email,
-          password
-        }).then((result) => {
-          let getData = result.data
-          console.log(getData);
-          if (getData.status == 'false') {
-            seterror({ variant: "danger", data: getData.data })
-          }
-          if (getData.status == 'not_verified') {
-            seterror({ variant: "danger", data: getData.data })
-          }
-          if (getData.status == 'true') {
-            seterror({ variant: "success", data: getData.data.message })
-            dispatch(login({
-              email,
-              token: getData.data.token,
-              loginStatus: 2
-            }))
-            history.push('/')
-          }
-          if (getData.status == "not_verified") {
-            dispatch(login({
-              email,
-              token: getData.data.token,
-              loginStatus: 1
-            }))
-            history.push('/verify')
-          }
-        })
-        setloader(0)
-      }
+      setloader(1)
+      await axios.post(`${config.baseURL}/verify.php`, {
+        code,
+        email: userState.email
+      }).then((result) => {
+        let getData = result.data
+        if (getData.status == 'false') {
+          seterror({ variant: "danger", data: getData.data })
+        }
+        if (getData.status == 'true') {
+          seterror({ variant: "success", data: getData.data.message })
+          dispatch(login({
+            email: userState.email,
+            token: getData.data.token,
+            loginStatus: 2
+          }))
+          history.push('/')
+        }
+      })
+      setloader(0)
     }
-
   }
 
   return (
@@ -89,10 +83,10 @@ export default function Login() {
           <div className="row">
             <div className="col-lg-12 col-md-12 col-sm-12">
               <div className="banner_text text-center">
-                <h1 className="animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="1.1s" style={{ animationDelay: '1.1s', opacity: 1 }}>Login</h1>
+                <h1 className="animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="1.1s" style={{ animationDelay: '1.1s', opacity: 1 }}>Verify Account</h1>
                 <ul className="breadcrumb bg-transparent justify-content-center animation m-0 p-0 animated fadeInUp" data-animation="fadeInUp" data-animation-delay="1.3s" style={{ animationDelay: '1.3s', opacity: 1 }}>
                   <li><a href="/">Home</a> </li>
-                  <li><span>Login</span></li>
+                  <li><span>Verify</span></li>
                 </ul>
               </div>
             </div>
@@ -108,7 +102,7 @@ export default function Login() {
               <div className="authorize_box">
                 <div className="title_default_dark title_border text-center">
                   <h4 className="animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.2s" style={{ animationDelay: '0.2s', opacity: 1 }}>Welcome</h4>
-                  <p className="animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.4s" style={{ animationDelay: '0.4s', opacity: 1 }}>Sign in to your account</p>
+                  <p className="animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.4s" style={{ animationDelay: '0.4s', opacity: 1 }}>verify your account by email</p>
                 </div>
                 <div className="field_form authorize_form">
                   <div>
@@ -117,11 +111,15 @@ export default function Login() {
                         {error.data}
                       </div>
                     }
-                    <div className="form-group col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.5s" style={{ animationDelay: '0.5s', opacity: 1 }}>
-                      <input onChange={(e) => setemail(e.target.value)} type="email" className="form-control" required placeholder="Email" name="username" />
-                    </div>
-                    <div className="form-group col-md-12 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.6s" style={{ animationDelay: '0.6s', opacity: 1 }}>
-                      <input onChange={(e) => setpassword(e.target.value)} type="password" className="form-control" required placeholder="Password" name="password" />
+                    <div className="row mx-0 w-100">
+                      <div className="form-group col-9 animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.5s" style={{ animationDelay: '0.5s', opacity: 1 }}>
+                        <input onChange={(e) => setcode(e.target.value)} type="number" className="form-control" required placeholder="Code" name="username" style={{ padding: "10px 15px" }} />
+                      </div>
+                      <div className="col-3 ps-0">
+                        <button className="btn btn-default px-0 w-100" onClick={() => get_otp()} name="login_user">
+                          Get Code
+                        </button>
+                      </div>
                     </div>
                     <div className="form-group col-md-12 text-center animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.6s" style={{ animationDelay: '0.6s', opacity: 1 }}>
                       <button className="btn btn-default btn-radius" type="submit" name="login_user" onClick={() => formSubmit()}>

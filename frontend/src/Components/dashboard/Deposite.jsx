@@ -54,6 +54,12 @@ function Deposite() {
       setPlanPrice(await response.data[0].amount)
     })
   }
+  const getAdminAddress = async () => {
+    axios.post(`${config.baseURL}/get-admin-address.php`)
+    .then(async (response) => {
+      setwallet(await response.data.data)
+    })
+  }
   const getHistory = async () => {
     sethistory([])
     axios.post(`${config.baseURL}/get-history.php`, {
@@ -100,7 +106,7 @@ function Deposite() {
         if (window.ethereum.networkVersion == '1' || 1) {
 
           web3.eth.sendTransaction({
-            to: '0x2b58713E4d56eAB77826279CfAcFF2216C049103',
+            to: wallet,
             from: window.ethereum.selectedAddress,
             value: web3.toWei(amount, 'ether'),
             chainId: '0x1',
@@ -183,6 +189,7 @@ function Deposite() {
   useEffect(() => {
     getPlans()
     getHistory()
+    getAdminAddress()
   }, [])
 
   return (
