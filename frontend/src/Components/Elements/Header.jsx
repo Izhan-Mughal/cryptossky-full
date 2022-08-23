@@ -11,6 +11,7 @@ export default function Header() {
 
     const history = useHistory();
     const [state, setstate] = useState(false);
+    const [mode, setmode] = useState(0);
     const [isToggle, setToggle] = useState(false);
     // const i = document.querySelector('.hello');
 
@@ -77,6 +78,7 @@ export default function Header() {
                                         <ul className="list_none ps-0">
                                             <li><Link className="dropdown-item nav-link page-scroll nav_item" to="/about">About Cryptossky</Link></li>
                                             <li><Link className="dropdown-item nav-link page-scroll nav_item" to="/invest">IT IS SAFE INVEST IN CRYPTOSSKY?</Link></li>
+                                            <li><Link className="dropdown-item nav-link page-scroll nav_item" to="/invest">Knowing Our Bonus</Link></li>
                                         </ul>
                                     </div>
                                 </li>
@@ -118,6 +120,17 @@ export default function Header() {
                                             <Link className="btn btn-default btn-radius nav_item" to="/login">Login</Link>
 
                                     }
+
+                                </li>
+                                <li className='ms-1'>
+                                    <div class="toogle-mode" onClick={()=>setmode(!mode)}>
+                                        {
+                                            mode == 1 ?
+                                                <i className="fa fa-sun"></i>
+                                                :
+                                                <i className="fa fa-moon"></i>
+                                        }
+                                    </div>
                                 </li>
                             </ul>
                         </Navbar.Collapse>

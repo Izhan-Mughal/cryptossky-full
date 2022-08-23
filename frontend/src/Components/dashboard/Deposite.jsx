@@ -99,7 +99,7 @@ function Deposite() {
         web3 = new Web3(window.web3.currentProvider)
         let amount
         plans.forEach(element => {
-          if (element.id = selectPlan) {
+          if (element.id == selectPlan) {
             amount = element.amount
           }
         });
@@ -121,6 +121,7 @@ function Deposite() {
                 token: userState.token,
                 email: userState.email,
                 plan_id: selectPlan,
+                wallet_address: window.ethereum.selectedAddress,
               }).then((result) => {
                 showAlert(true, 'success', 'Transaction Success')
                 getHistory()

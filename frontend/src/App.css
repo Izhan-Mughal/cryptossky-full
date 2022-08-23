@@ -10651,3 +10651,13 @@ select.form-control {
 	font-size:13px ;
 	color: #3b5de7;
 }
+.toogle-mode{
+	width:35px;
+	height:35px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 4px;
+	color: white;
+	background-color: #ffffff45;
+}

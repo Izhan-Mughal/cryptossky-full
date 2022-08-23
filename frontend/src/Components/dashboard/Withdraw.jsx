@@ -9,6 +9,7 @@ import { selectUser } from '../../features/userSlice';
 import axios from 'axios';
 import config from '../../config'
 import CryptoJS from 'crypto-js';
+import swal from 'sweetalert';
 // import Web3 from 'web3';
 
 
@@ -45,7 +46,7 @@ function Withdraw() {
             email: userState.email,
         }).then(async (response) => {
             if (response.data.status == "True") {
-                alert(response.data.data)
+                swal(response.data.data)
             }
         })
     }

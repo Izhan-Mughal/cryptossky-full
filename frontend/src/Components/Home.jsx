@@ -99,7 +99,7 @@ export default function Home() {
             <div className="row align-items-center">
               <div className="col-lg-12 col-md-12 col-sm-12">
                 <div className="title_blue_dark title_border text-center">
-                  <h4 className="animation" data-animation="fadeInUp" data-animation-delay="0.2s">About The Cryptossky
+                  {/* <h4 className="animation" data-animation="fadeInUp" data-animation-delay="0.2s">About The Cryptossky
                   </h4>
                   <p className="animation" data-animation="fadeInUp" data-animation-delay="0.4s">Cryptossky will
                     provide a GPF (Global Protection Funds) to minimize any crisis with the international Real
@@ -112,7 +112,7 @@ export default function Home() {
                     benefit for users is the possibility to win an apartment in Turkey or United Arabic
                     Emirates. Every six months we will provide one property in combination with a Real Estate
                     Group in Dubai (Conditions Apply).
-                  </p>
+                  </p> */}
                   <p className="animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.8s">
 
                     <img src={process.env.PUBLIC_URL + "./assets/images/logo-cryptossky.png"} alt="Cryptoskky" />
@@ -139,7 +139,7 @@ export default function Home() {
         </section>
         {/* END SECTION ABOUT US */}
         {/* START SECTION SERVICES */}
-        <section id="service" className="bg_navy_blue pb-0">
+        {/* <section id="service" className="bg_navy_blue pb-0">
           <div className="container">
             <div className="row align-items-center">
               <div className="col-lg-12 col-md-12 col-sm-12">
@@ -155,7 +155,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
         {/* END SECTION SERVICES */}
         {/* START SECTION SALE */}
         {/* <section id="token" class="section_token token_sale overflow_hide">

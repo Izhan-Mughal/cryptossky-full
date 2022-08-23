@@ -33,11 +33,11 @@ export default function Invest() {
         </div>
       </section>
 
-      <section id="service" className="bg_navy_blue pb-0">
+      <section id="service" className=" pb-0">
           <div className="container">
             <div className="row align-items-center">
               <div className="col-lg-12 col-md-12 col-sm-12">
-                <div className="title_default_light title_border text-center">
+                <div className=" title_border text-center">
                   <h4 className="animation" data-animation="fadeInUp" data-animation-delay="0.2s">IT IS SAFE INVEST IN CRYPTOSSKY.COM?</h4>
                   <p className="animation" data-animation="fadeInUp" data-animation-delay="0.4s">The answer is yes, if the circumstances remain within the economic parameters considered normal in the international sphere. For these same reasons, we remind our potential investors to use common sense instead of using emotion as the spearhead to initiate an investment program. But besides that, we will never tell you that you are going to get rich here, but it is very possible that with our monthly contribution you can feel more comfortable in your day to day life. At least one of our investors will own an apartment every six months, only for our subscribers. Our wish is that your level of confidence increases every day in view of the management of resources.</p>
                   <p className="animation" data-animation="fadeInUp" data-animation-delay="0.2s">And to increase this trust, despite the fact that it can only grow due to the daily result of our operations, we have created the Global Protection Fund that increases with each deposit and that has the function of mitigating the possible damages to which they may be submitted our servers. Currently we have more than two Dedicated Servers and for security I should not make our strategy public to guarantee all the data.</p>
