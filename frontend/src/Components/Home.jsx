@@ -1,7 +1,26 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from './Elements/Header'
 import Footer from './Elements/Footer'
+import axios from 'axios';
+import config from '../config'
+import { Link } from 'react-router-dom';
+
 export default function Home() {
+
+  const [plans, setplans] = useState([])
+
+  const getPlans = async () => {
+    axios.post(`${config.baseURL}/plans.php`)
+      .then(async (response) => {
+        setplans(await response.data)
+      })
+  }
+
+  useEffect(() => {
+    getPlans();
+  }, [])
+
+
 
   return (
     <>
@@ -420,226 +439,32 @@ export default function Home() {
               </div>
             </div>
             <div className="row small_space">
-              <div className="col-lg-4 col-md-4">
-                <div className="pricing_box text-center res_sm_mt_20">
-                  <div className="pr_title gradient_box2">
-                    <h3>Basic</h3>
-                    <div className="price_tage">
-                      <h3>100 USDT</h3>
-                      <span>360 Days</span>
+              {
+                plans.map((data) => (
+                  <div className="col-lg-4 col-md-4">
+                    <div className="pricing_box text-center res_sm_mt_20">
+                      <div className="pr_title gradient_box2">
+                        <h3 className='text-capitalize'>{data.title}</h3>
+                        <div className="price_tage">
+                          <h3>{data.amount} USDT</h3>
+                          <span>{data.days} Days</span>
+                        </div>
+                      </div>
+                      <div className="pr_content">
+                        <ul className="list_none ps-0">
+                          <li>{data.days} Days locked</li>
+                          <li>{data.description}</li>
+                          <li>{data.profit_ratio} year profit</li>
+                        </ul>
+                      </div>
+                      <div className="pr_footer">
+                        <Link to="/deposit" className="btn btn-default btn-radius">Select Plan Now</Link>
+                      </div>
                     </div>
                   </div>
-                  <div className="pr_content">
-                    <ul className="list_none ps-0">
-                      <li>1.2% return daily for 5 days week</li>
-                      <li>360 Days locked</li>
-                      <li>24% interest monthly</li>
-                      <li>288 USDT year profit</li>
-                    </ul>
-                  </div>
-                  <div className="pr_footer">
-                    <a href="#" className="btn btn-default btn-radius">Select Plan Now</a>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-4 col-md-4">
-                <div className="pricing_box text-center res_sm_mt_20">
-                  <div className="pr_title gradient_box2">
-                    <h3>Basic</h3>
-                    <div className="price_tage">
-                      <h3>200 USDT</h3>
-                      <span>360 Days</span>
-                    </div>
-                  </div>
-                  <div className="pr_content">
-                    <ul className="list_none">
-                      <li>1.2% return daily for 5 days week</li>
-                      <li>360 Days locked</li>
-                      <li>24% interest monthly</li>
-                      <li>576 USDT year profit</li>
-                    </ul>
-                  </div>
-                  <div className="pr_footer">
-                    <a href="#" className="btn btn-default btn-radius">Select Plan Now</a>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-4 col-md-4">
-                <div className="pricing_box text-center res_sm_mt_20">
-                  <div className="pr_title gradient_box2">
-                    <h3>Basic</h3>
-                    <div className="price_tage">
-                      <h3>500 USDT</h3>
-                      <span>360 Days</span>
-                    </div>
-                  </div>
-                  <div className="pr_content">
-                    <ul className="list_none">
-                      <li>1.2% return daily for 5 days week</li>
-                      <li>360 Days locked</li>
-                      <li>24% interest monthly</li>
-                      <li>1440 USDT year profit</li>
-                    </ul>
-                  </div>
-                  <div className="pr_footer">
-                    <a href="#" className="btn btn-default btn-radius">Select Plan Now</a>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-4 col-md-4">
-                <div className="pricing_box text-center res_sm_mt_20">
-                  <div className="pr_title gradient_box2">
-                    <h3>Basic</h3>
-                    <div className="price_tage">
-                      <h3>1000 USDT</h3>
-                      <span>180 Days</span>
-                    </div>
-                  </div>
-                  <div className="pr_content">
-                    <ul className="list_none">
-                      <li>1.2% return daily for 5 days week</li>
-                      <li>180 Days locked</li>
-                      <li>24% interest monthly</li>
-                      <li>1440 USDT 6 month profit</li>
-                    </ul>
-                  </div>
-                  <div className="pr_footer">
-                    <a href="#" className="btn btn-default btn-radius">Select Plan Now</a>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-4 col-md-4">
-                <div className="pricing_box text-center res_sm_mt_30">
-                  <div className="pr_title gradient_green">
-                    <h3>Standard</h3>
-                    <div className="price_tage">
-                      <h3>2500 USDT</h3>
-                      <span>180 Days</span>
-                    </div>
-                  </div>
-                  <div className="pr_content">
-                    <ul className="list_none">
-                      <li>0.30% return daily for 5 Days week</li>
-                      <li>180 Days locked</li>
-                      <li>6% interest monthly</li>
-                      <li>900 USDT 6 months profit</li>
-                    </ul>
-                  </div>
-                  <div className="pr_footer">
-                    <a href="#" className="btn btn-default btn-radius">Select Plan Now</a>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-4 col-md-4">
-                <div className="pricing_box text-center res_sm_mt_30">
-                  <div className="pr_title gradient_green">
-                    <h3>Standard</h3>
-                    <div className="price_tage">
-                      <h3>5000 USDT</h3>
-                      <span>180 Days</span>
-                    </div>
-                  </div>
-                  <div className="pr_content">
-                    <ul className="list_none">
-                      <li>0.35% return daily for 5 Days week</li>
-                      <li>180 Days locked</li>
-                      <li>7% interest monthly</li>
-                      <li>2100 USDT 6 month profit</li>
-                    </ul>
-                  </div>
-                  <div className="pr_footer">
-                    <a href="#" className="btn btn-default btn-radius">Select Plan Now</a>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-4 col-md-4">
-                <div className="pricing_box text-center res_sm_mt_30">
-                  <div className="pr_title gradient_green">
-                    <h3>Standard</h3>
-                    <div className="price_tage">
-                      <h3>10,000 USDT</h3>
-                      <span>180 Days</span>
-                    </div>
-                  </div>
-                  <div className="pr_content">
-                    <ul className="list_none">
-                      <li>0.40% return daily for 180 Days</li>
-                      <li>180 Days locked</li>
-                      <li>8% interest monthly</li>
-                      <li>4800 USDT 6 months profit</li>
-                    </ul>
-                  </div>
-                  <div className="pr_footer">
-                    <a href="#" className="btn btn-default btn-radius">Select Plan Now</a>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-4 col-md-4">
-                <div className="pricing_box text-center res_sm_mt_30">
-                  <div className="pr_title gradient_green">
-                    <h3>Standard</h3>
-                    <div className="price_tage">
-                      <h3>25,000 USDT</h3>
-                      <span>180 Days</span>
-                    </div>
-                  </div>
-                  <div className="pr_content">
-                    <ul className="list_none">
-                      <li>0.45% return daily for 180 Days</li>
-                      <li>180 Days locked</li>
-                      <li>9% interest monthly</li>
-                      <li>13,500 USDT 6 months profit</li>
-                    </ul>
-                  </div>
-                  <div className="pr_footer">
-                    <a href="#" className="btn btn-default btn-radius">Select Plan Now</a>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-4 col-md-4">
-                <div className="pricing_box text-center res_sm_mt_30">
-                  <div className="pr_title yellow_bg">
-                    <h3>Premium Gold</h3>
-                    <div className="price_tage">
-                      <h3>50,000 USDT</h3>
-                      <span>360 Days</span>
-                    </div>
-                  </div>
-                  <div className="pr_content">
-                    <ul className="list_none">
-                      <li>0.15% return daily for 5 Days week</li>
-                      <li>360 Days locked</li>
-                      <li>36% interest yearly</li>
-                      <li>Profit+Capital = 68,000 USDT</li>
-                    </ul>
-                  </div>
-                  <div className="pr_footer">
-                    <a href="#" className="btn btn-default btn-radius">Select Plan Now</a>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-4 col-md-4">
-                <div className="pricing_box text-center res_sm_mt_30">
-                  <div className="pr_title yellow_bg">
-                    <h3>Premium Diamond</h3>
-                    <div className="price_tage">
-                      <h3>100,000 USDT</h3>
-                      <span>360 Days</span>
-                    </div>
-                  </div>
-                  <div className="pr_content">
-                    <ul className="list_none">
-                      <li>0.10% return daily for 5 Days week</li>
-                      <li>360 Days locked</li>
-                      <li>24% interest yearly</li>
-                      <li>Profit+Capital = 124,000 USDT</li>
-                    </ul>
-                  </div>
-                  <div className="pr_footer">
-                    <a href="#" className="btn btn-default btn-radius">Select Plan Now</a>
-                  </div>
-                </div>
-              </div>
+                ))
+              }
+
             </div>
             <div className="row">
               <div className="col-md-12">
@@ -810,7 +635,7 @@ export default function Home() {
         <a href="#" className="scrollup btn-default" style={{ display: 'none' }}><i className="ion-ios-arrow-up" /></a>
 
         {/* END SECTION CONTACT */}      </div>
-        <Footer/>
+      <Footer />
     </>
   )
 }

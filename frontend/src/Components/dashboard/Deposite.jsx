@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import { selectUser } from '../../features/userSlice';
 import axios from 'axios';
 import config from '../../config'
+import { selectMode } from '../../features/modeSlice';
 // import Web3 from 'web3';
 
 const columns = [
@@ -20,6 +21,8 @@ const columns = [
 
 
 function Deposite() {
+
+  const modeState = useSelector(selectMode)
 
   const userState = useSelector(selectUser)
 
@@ -56,9 +59,9 @@ function Deposite() {
   }
   const getAdminAddress = async () => {
     axios.post(`${config.baseURL}/get-admin-address.php`)
-    .then(async (response) => {
-      setwallet(await response.data.data)
-    })
+      .then(async (response) => {
+        setwallet(await response.data.data)
+      })
   }
   const getHistory = async () => {
     sethistory([])
@@ -134,7 +137,7 @@ function Deposite() {
           detectChain()
         }
       }
-    }else{
+    } else {
       alert("Please Install Meta Mask")
     }
 
@@ -195,54 +198,55 @@ function Deposite() {
 
   return (
     <>
-      <div class="dashboard-body">
-        <div className='ws-nav-bg'>
-          <img src="/assets/images/bg-effect.png" alt="" />
-        </div>
-        <div className="ws-nav">
-          <HeaderDashboard />
-        </div>
-        <div className="container ws-container dashboard-main">
-          <div className="w-100 px-lg-0 px-3 d-flex flex-lg-row flex-column">
-            <div className="ws-side-col pt-lg-0 pt-4">
-              <SidebarDashboard />
-            </div>
-            <div className="ws-side-main">
-              <div className="ps-lg-4">
-                <div className="d-flex align-items-center justify-content-between pt-3 pb-4">
-                  <span className='fs-6 fw-500 text-light'>DEPOSITS</span>
-                  <span className='fs-7 text-light '> <Link to="dashboard" className='text-light text-faded text-decoration-none'>Dashboard </Link>   <span className='text-faded fs-8'>/</span>  <Link to="deposit" className='text-light text-faded text-decoration-none'>Deposits</Link></span>
-                </div>
-                <div className="w-100">
-                  <div className="card ws-card mb-4" bis_skin_checked={1}>
-                    <div className="card-body p-4" bis_skin_checked={1}>
-                      <h4 className="mb-3 text-dark text-faded">New Deposits</h4>
-                      <div>
-                        <h5 className="mb-3 text-dark text-faded">Account Information</h5>
-                        {
-                          error.state && < div class={"alert alert-" + error.variant} role="alert">{error.text}</div>
-                        }
-                        <div className="row" bis_skin_checked={1}>
-                          <div className="col-md-12 mb-3" bis_skin_checked={1}>
-                            <label className="form-label">Select Plan</label>
-                            <select onChange={(e) => setSelectPlan(e.target.value)} className="form-control select2 select2-hidden-accessible" data-select2-id={1} tabIndex={-1} aria-hidden="true">
-                              {
-                                plans.map((element, index) => {
-                                  return (
-                                    <option value={element.id} >{element.title} {element.amount} USDT</option>
-                                  )
-                                })
-                              }
-                            </select>
-                          </div>
-                          <div className="col-md-12" bis_skin_checked={1}>
-                            <div className="mb-3" bis_skin_checked={1}>
-                              <label className="form-label">Amount</label>
-                              <input className="form-control" required type="text" disabled value={planPrice} />
+      <div className={modeState == 0 ? 'light-dashboard-body' : 'dark-dashboard-body'}>
+        <div class="dashboard-body">
+          <div className='ws-nav-bg'>
+            <img src="/assets/images/bg-effect.png" alt="" />
+          </div>
+          <div className="ws-nav">
+            <HeaderDashboard />
+          </div>
+          <div className="container ws-container dashboard-main">
+            <div className="w-100 px-lg-0 px-3 d-flex flex-lg-row flex-column">
+              <div className="ws-side-col pt-lg-0 pt-4">
+                <SidebarDashboard />
+              </div>
+              <div className="ws-side-main">
+                <div className="ps-lg-4">
+                  <div className="d-flex align-items-center justify-content-between pt-3 pb-4">
+                    <span className='fs-6 fw-500 text-light'>DEPOSITS</span>
+                    <span className='fs-7 text-light '> <Link to="dashboard" className='text-light text-faded text-decoration-none'>Dashboard </Link>   <span className='text-faded fs-8'>/</span>  <Link to="deposit" className='text-light text-faded text-decoration-none'>Deposits</Link></span>
+                  </div>
+                  <div className="w-100">
+                    <div className="card ws-card mb-4" bis_skin_checked={1}>
+                      <div className="card-body p-4" bis_skin_checked={1}>
+                        <h4 className="mb-3 text-dark text-faded">New Deposits</h4>
+                        <div>
+                          <h5 className="mb-3 text-dark text-faded">Account Information</h5>
+                          {
+                            error.state && < div class={"alert alert-" + error.variant} role="alert">{error.text}</div>
+                          }
+                          <div className="row" bis_skin_checked={1}>
+                            <div className="col-md-12 mb-3" bis_skin_checked={1}>
+                              <label className="form-label">Select Plan</label>
+                              <select onChange={(e) => setSelectPlan(e.target.value)} className="form-control select2 select2-hidden-accessible" data-select2-id={1} tabIndex={-1} aria-hidden="true">
+                                {
+                                  plans.map((element, index) => {
+                                    return (
+                                      <option value={element.id} >{element.title} {element.amount} USDT</option>
+                                    )
+                                  })
+                                }
+                              </select>
+                            </div>
+                            <div className="col-md-12" bis_skin_checked={1}>
+                              <div className="mb-3" bis_skin_checked={1}>
+                                <label className="form-label">Amount</label>
+                                <input className="form-control" required type="text" disabled value={planPrice} />
+                              </div>
                             </div>
                           </div>
-                        </div>
-                        {/* <div className="row" bis_skin_checked={1}>
+                          {/* <div className="row" bis_skin_checked={1}>
                           <div className="col-md-12" bis_skin_checked={1}>
                             <div className="mb-3" bis_skin_checked={1}>
                               <label className="form-label">Wallet Address</label>
@@ -250,25 +254,26 @@ function Deposite() {
                             </div>
                           </div>
                         </div> */}
-                        <div className="row" bis_skin_checked={1}>
-                          <div className="col-md-6" bis_skin_checked={1}>
-                            <button onClick={() => formSubmit()} className="btn btn-success waves-effect waves-light ws-btn-1">{walletBtn}</button>
+                          <div className="row" bis_skin_checked={1}>
+                            <div className="col-md-6" bis_skin_checked={1}>
+                              <button onClick={() => formSubmit()} className="btn btn-success waves-effect waves-light ws-btn-1">{walletBtn}</button>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="card ws-card mb-4" bis_skin_checked={1}>
-                    <div className="card-body p-4" bis_skin_checked={1}>
-                      <Box sx={{ height: 400, width: '100%' }}>
-                        <DataGrid
-                          rows={history}
-                          columns={columns}
-                          pageSize={5}
-                          rowsPerPageOptions={[5]}
-                          disableSelectionOnClick
-                        />
-                      </Box>
+                    <div className="card ws-card mb-4" bis_skin_checked={1}>
+                      <div className="card-body p-4" bis_skin_checked={1}>
+                        <Box sx={{ height: 400, width: '100%' }}>
+                          <DataGrid
+                            rows={history}
+                            columns={columns}
+                            pageSize={5}
+                            rowsPerPageOptions={[5]}
+                            disableSelectionOnClick
+                          />
+                        </Box>
+                      </div>
                     </div>
                   </div>
                 </div>

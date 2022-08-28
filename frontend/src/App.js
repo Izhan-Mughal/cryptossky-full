@@ -76,7 +76,7 @@ function App() {
               userState?.loginStatus == 2 ?
                 <Deposite />
                 :
-                <Redirect to='/' />
+                <Redirect to='/login' />
             }
           </Route>
           <Route exact path='/transaction'>

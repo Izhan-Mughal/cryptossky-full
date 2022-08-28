@@ -253,6 +253,12 @@ Version      : 1.0
 	font-family: "ionicons";
 	src: url(../public/assets/fonts/ionicons.ttf);
 }
+.light-mood{
+	---light-bg--:white;
+}
+.dark-mood{
+	---light-bg--:black;
+}
 
 body {
 	background: #ffffff none repeat scroll 0 0;
@@ -10387,7 +10393,7 @@ li a {
 
 .ws-sidebar {
 	border-radius: 7px;
-	background: #fff;
+	background:var(--main-color--);
 	box-shadow: 0 0.75rem 1.5rem rgb(18 38 63 / 3%);
 }
 
@@ -10418,7 +10424,7 @@ li a {
 }
 
 .ws-sidebar-menu li a {
-	color: #707d8a;
+	color: var(--side-bar-color);
 	font-size: 14.4px;
 }
 
@@ -10429,7 +10435,7 @@ li a {
 	font-size: 1.2rem;
 	line-height: 1.40625rem;
 	vertical-align: middle;
-	color: #707d8a;
+	color:  var(--side-bar-color);
 	-webkit-transition: all .4s;
 	transition: all .4s;
 }
@@ -10445,9 +10451,22 @@ li a {
 .mm-active .active i {
 	color: #0CCF81 !important;
 }
-
+.light-dashboard-body{
+	--var-back-:#F3F5F7;
+	--main-color--:#fff !important;
+	--side-bar-color:#707d8a !important;
+	/* --text-color--: */
+	/* background-color: #F3F5F7; */
+}
+.dark-dashboard-body{
+	--var-back-:#35363A !important;
+	--main-color--:#202124 !important;
+	--text-color-:#fff !important;
+	--side-bar-color:#fff !important;
+	
+}
 .dashboard-body {
-	background-color: #F3F5F7;
+	background-color: var(--var-back-);
 	height: 100%;
 	min-height: 100vh;
 }
@@ -10489,6 +10508,7 @@ li a {
 }
 
 .text-faded {
+	color: var(--text-color-)!important;
 	opacity: .8;
 }
 
@@ -10530,7 +10550,7 @@ li a {
 
 .ws-card.card {
 	border-radius: 7px !important;
-	background: #fff !important;
+	background: var(--main-color--) !important;
 	box-shadow: 0 0.75rem 1.5rem rgb(18 38 63 / 3%) !important;
 	border: none !important;
 }

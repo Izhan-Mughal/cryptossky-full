@@ -9,6 +9,7 @@ import { selectUser } from '../../features/userSlice';
 import axios from 'axios';
 import config from '../../config'
 import CryptoJS from 'crypto-js';
+import { selectMode } from '../../features/modeSlice';
 // import Web3 from 'web3';
 
 
@@ -23,6 +24,8 @@ const columns = [
 
 
 function Dashboard() {
+
+    const modeState = useSelector(selectMode)
 
     const userState = useSelector(selectUser)
 
@@ -69,71 +72,20 @@ function Dashboard() {
         getHistory()
     }, [])
 
+    const [theme, settheme] = useState(0)
 
-    // const withdraw = () => {
-
-    //     var burl = 'https://api.binance.com';
-    //     var endPoint = '/api/v3/account';
-    //     let timestamp = 1660586013008;
-    //     // let timestamp = Date.now();
-    //     // let address = "0x2b58713E4d56eAB77826279CfAcFF2216C049103"
-
-
-    //     var dataQueryString = 'recvWindow=60000&timestamp=' + timestamp;
-
-    //     var keys = {
-    //         'akey': 'g7kzQm1IW2snmm04uBByzPg0maYBpN9FfUNG85YOPwF2PFt29cOMl86YV8a5ePRV',
-    //         'skey': 'DWDsYWaV6x8kD5jjmC39FPxY8wKST4zHWiIm5O0gTwMq94ajc1PEJSZF9lv48kzz'
-    //     }
-
-    //     var signature = CryptoJS.HmacSHA256(dataQueryString, keys['skey']).toString(CryptoJS.enc.Hex);
-
-
-    //     var ourRequest = new XMLHttpRequest();
-
-    //     var url = burl + endPoint + '?' + dataQueryString + '&signature=' + signature;
-    //     // var url = `${burl}/sapi/v1/capital/withdraw/apply?coin=BNB&address=${address}&amount=1.01&timestamp=${timestamp}&signature=${signature}`
-
-    //     ourRequest.open('GET', url, true);
-    //     ourRequest.setRequestHeader('X-MBX-APIKEY', keys['akey']);
-    //     ourRequest.setRequestHeader("Content-Type", "application/json");
-
-
-    //     ourRequest.onload = function () {
-    //         ourData = JSON.parse(ourRequest.responseText);
-    //         console.log(ourData);
-    //     }
-    //     ourRequest.send();
-
-
-    //     // var xhr = new XMLHttpRequest();
-    //     // xhr.withCredentials = true;
-
-    //     // xhr.addEventListener("readystatechange", function () {
-    //     //     if (this.readyState === 4) {
-    //     //         console.log(this.responseText);
-    //     //     }
-    //     // });
-
-    //     // let address = "0x2b58713E4d56eAB77826279CfAcFF2216C049103"
-    //     // // let paramurl = `https://api.binance.com/sapi/v1/capital/withdraw/apply?coin=BNB&address=${address}&amount=1.01&timestamp=${timestamp}&signature=${signature}`
-    //     // let paramurl = burl + endPoint + '?' + dataQueryString + '&signature=' + signature;
-    //     // xhr.open("POST",paramurl);
-    //     // xhr.setRequestHeader("Content-Type", "application/json");
-    //     // xhr.setRequestHeader('X-MBX-APIKEY', keys['akey']);
-
-    //     // xhr.send();
-
-    // }
+    function setmytheme() {
+        settheme(!theme)
+    }
 
     return (
-        <>
+        <div className={modeState == 0 ? 'light-dashboard-body' : 'dark-dashboard-body'}>
             <div class="dashboard-body">
                 <div className='ws-nav-bg'>
                     <img src="/assets/images/bg-effect.png" alt="" />
                 </div>
                 <div className="ws-nav">
-                    <HeaderDashboard />
+                    <HeaderDashboard data={setmytheme} />
                 </div>
                 <div className="container ws-container dashboard-main">
                     <div className="w-100 px-lg-0 px-3 d-flex flex-lg-row flex-column">
@@ -220,7 +172,7 @@ function Dashboard() {
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 
