@@ -49,10 +49,10 @@ function SidebarDashboard() {
                 </li>
 
                 <li>
-                    <a class=" waves-effect">
+                    <Link to="review" class=" waves-effect">
                         <i class="mdi mdi-account-multiple-outline"></i>
                         <span>Write a Review</span>
-                    </a>
+                    </Link>
                 </li>
 
                 <li>

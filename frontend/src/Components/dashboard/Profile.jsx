@@ -9,6 +9,7 @@ import { selectUser } from '../../features/userSlice';
 import axios from 'axios';
 import config from '../../config'
 import { selectMode } from '../../features/modeSlice';
+import swal from 'sweetalert';
 // import Web3 from 'web3';
 
 
@@ -41,6 +42,7 @@ function Profile() {
     const [history, sethistory] = useState([])
     const [balance, setbalance] = useState([])
     const [error, seterror] = useState("")
+    const [updateImage, setupdateImage] = useState(1)
 
 
     const getUser = async () => {
@@ -48,7 +50,6 @@ function Profile() {
             token: userState.token,
             email: userState.email,
         }).then(async (response) => {
-            console.log(response.data);
             setuserinfo(await response.data)
             setProfile({
                 name: response.data.name,
@@ -56,6 +57,7 @@ function Profile() {
                 phone: response.data.phone,
                 wallet_address: response.data.wallet_address
             })
+            setupdateImage(await 0)
         })
     }
 
@@ -94,10 +96,51 @@ function Profile() {
         }).then(async (response) => {
             if (response.data.status = true) {
                 seterror({ variant: "success", data: response.data.data })
+                getUser()
             }
         })
     }
 
+    const fileClick = () => {
+        document.querySelector('#imageInp').click();
+    }
+
+    const handelFile = async (e) => {
+        if (e.target.files[0].name.toUpperCase().indexOf('PNG') != -1 || e.target.files[0].name.toUpperCase().indexOf('JPG') != -1 || e.target.files[0].name.toUpperCase().indexOf('GIF') != -1 || e.target.files[0].name.toUpperCase().indexOf('JPEG') != -1) {
+            const base64 = await convertBase64(e.target.files[0]);
+
+            setupdateImage(await 1)
+
+            await axios.post(`${config.baseURL}/update-profile-image.php`, {
+                token: userState.token,
+                email: userState.email,
+                image: base64
+            }).then(async (response) => {
+                getUser();
+            })
+            setupdateImage(await 0)
+
+        }
+        else {
+            swal("Invalid Image Format. select (JPG,PNG,GIF) files");
+        }
+
+    }
+
+    const convertBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+
+            fileReader.onload = () => {
+                resolve(fileReader.result);
+            };
+
+            fileReader.onerror = (error) => {
+                reject(error);
+            };
+        });
+    };
 
 
     useEffect(() => {
@@ -133,8 +176,26 @@ function Profile() {
                                                 <div className="card ws-card p-4 mb-4">
                                                     <div className="card-body">
                                                         <div className="w-100 d-flex flex-column align-items-center">
-                                                            <img src="assets/images/user_img.png" className='profile-avater' alt="" />
-                                                            <h6 className='mt-4 text-dark text-capitalize'>{userinfo?.name}</h6>
+                                                            <div className='profile-avater' onClick={fileClick}>
+                                                                <div className='edit-profile'>  <i className="fa fa-edit"></i></div>
+                                                                {
+                                                                    updateImage == 1 &&
+                                                                    <div className='edit-profile-loader'>
+                                                                        <div class="spinner-border spinner-border-sm" role="status">
+                                                                            <span class="visually-hidden">Loading...</span>
+                                                                        </div>
+                                                                    </div>
+                                                                }
+                                                                {
+                                                                    userinfo?.image != null ?
+                                                                        <img src={`${config.baseURL}/images/${userinfo?.image}`} alt="" />
+                                                                        :
+                                                                        <img src="assets/images/user_img.png" alt="" />
+
+                                                                }
+                                                                <input type="file" id="imageInp" onChange={e => handelFile(e)} name="image" style={{ display: "none" }} />
+                                                            </div>
+                                                            <h6 className='mt-4 text-dark text-capitalize text-center'>{userinfo?.name}</h6>
                                                         </div>
                                                     </div>
                                                 </div>

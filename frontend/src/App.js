@@ -19,6 +19,7 @@ import { useEffect } from 'react';
 import About from './Components/About';
 import Invest from './Components/Invest';
 import Verify from './Components/Verify';
+import Review from './Components/dashboard/Review';
 
 function App() {
 
@@ -107,6 +108,14 @@ function App() {
             {
               userState?.loginStatus == 2 ?
                 <Withdraw />
+                :
+                <Redirect to='/' />
+            }
+          </Route>
+          <Route exact path='/review'>
+            {
+              userState?.loginStatus == 2 ?
+                <Review />
                 :
                 <Redirect to='/' />
             }
