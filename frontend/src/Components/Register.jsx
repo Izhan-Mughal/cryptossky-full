@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { login } from '../features/userSlice'
 import { Link } from 'react-router-dom'
@@ -6,10 +6,10 @@ import Header from './Elements/Header'
 import config from '../config'
 import axios from 'axios'
 import Footer from './Elements/Footer'
-import { useHistory } from 'react-router-dom'
+import { useHistory ,useParams } from 'react-router-dom'
 
 
-export default function register() {
+export default function Register() {
 
   const history = useHistory()
   const [name, setname] = useState("")
@@ -53,7 +53,8 @@ export default function register() {
                   name,
                   email,
                   phone,
-                  password
+                  password,
+                  pageURL
                 }).then((result) => {
                   let getData = result.data
                   console.log(getData);
@@ -87,7 +88,14 @@ export default function register() {
 
 
   }
-
+  const [pageURL, setPageURL] = useState(0);
+  
+  useEffect(() => {
+    setPageURL(window.location.search.split('=')[1]);
+  }, [])
+// const {refer} = useParams();
+// const [userrefer, setuserrefer] = useState(refer);
+console.log(pageURL)
   return (
     <div>
       {/* <div id="loader-wrapper">
@@ -129,6 +137,7 @@ export default function register() {
               <div className="authorize_box">
                 <div className="title_default_dark title_border text-center">
                   <h4 className="animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.2s" style={{ animationDelay: '0.2s', opacity: 1 }}>Register Now</h4>
+                  
                   <p className="animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.4s" style={{ animationDelay: '0.4s', opacity: 1 }}>Create your Free account</p>
                 </div>
                 <div className="field_form authorize_form">

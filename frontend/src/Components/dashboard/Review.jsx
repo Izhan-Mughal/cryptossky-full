@@ -19,6 +19,8 @@ function Review() {
 
     const userState = useSelector(selectUser)
 
+    const [reviewData, setreviewData] = useState([])
+
     const [error, seterror] = useState("")
     const [reviewState, setReviewState] = useState("")
 
@@ -28,7 +30,7 @@ function Review() {
             axios.post(`${config.baseURL}/add-review.php`, {
                 token: userState.token,
                 email: userState.email,
-                review:reviewState 
+                review: reviewState
             }).then(async (response) => {
                 if (response.data.status = true) {
                     seterror({ variant: "success", data: response.data.data })
@@ -43,8 +45,35 @@ function Review() {
 
     }
 
+    const getReview = async () => {
+        setreviewData([])
+        axios.post(`${config.baseURL}/get-review.php`, {
+            token: userState.token,
+            email: userState.email,
+        }).then(async (response) => {
+            let response_data = response.data
+            response_data.forEach((element,index) => {
+                if(response_data[index].status == 1){
+                    response_data[index].status = 'Approved'
+                }else{
+                    response_data[index].status = 'Pending'
+                }
+            });
+            console.log(response_data)
+            setreviewData(response_data)
+        })
+    }
+    useEffect(() => {
+        getReview()
+    }, [])
 
-
+    const [history, sethistory] = useState([])
+    const [rows, setrows] = useState([])
+    const columns = [
+        { field: 'id', headerName: 'Id', width: 50 },
+        { field: 'review', headerName: 'Review', width: 670 },
+        { field: 'status', headerName: 'Status', width: 170 },
+    ];
 
     return (
         <>
@@ -95,6 +124,22 @@ function Review() {
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="w-100 px-0">
+                                                        <div className="card ws-card mb-4" bis_skin_checked={1}>
+                                                            <div className="card-body p-4" bis_skin_checked={1}>
+                                                                <Box sx={{ height: 700, width: '100%' }}>
+                                                                    <DataGrid
+
+                                                                        rows={reviewData}
+                                                                        columns={columns}
+                                                                        pageSize={5}
+                                                                        rowsPerPageOptions={[5]}
+                                                                        disableSelectionOnClick
+                                                                    />
+                                                                </Box>
                                                             </div>
                                                         </div>
                                                     </div>

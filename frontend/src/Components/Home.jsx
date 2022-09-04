@@ -4,6 +4,7 @@ import Footer from './Elements/Footer'
 import axios from 'axios';
 import config from '../config'
 import { Link } from 'react-router-dom';
+import SliderHome from './SliderHome';
 
 export default function Home() {
 
@@ -511,7 +512,8 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            <div className="row small_space">
+            <SliderHome />
+            {/* <div className="row small_space">
               <div className="col-lg-12 col-md-12 col-sm-12">
                 <div className="testimonial_slider owl-carousel owl-theme">
                   <div className="item">
@@ -551,7 +553,7 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </section>
         {/* END SECTION TESTIMONIAL */}

@@ -16,11 +16,11 @@ import { selectMode } from '../../features/modeSlice';
 
 
 const columns = [
-    { field: 'date', headerName: 'Date', width: 170 },
-    { field: 'id', headerName: 'Id no.', width: 170 },
-    { field: 'billing_name', headerName: 'Billing Name', width: 170 },
+    { field: 'id', headerName: 'Id no.', width: 50 },
+    { field: 'name', headerName: 'Billing Name', width: 270 },
+    { field: 'created_at', headerName: 'Date', width: 270 },
     { field: 'amount', headerName: 'Amount', width: 170 },
-    { field: 'payment_status', headerName: 'Payment Status', width: 170 },
+    { field: 'status', headerName: 'Payment Status', width: 170 },
 ];
 
 
@@ -31,20 +31,12 @@ function Withdraw() {
     const userState = useSelector(selectUser)
 
     const [history, sethistory] = useState([])
-    const [balance, setbalance] = useState([])
+    const [loader, setloader] = useState(0)
 
 
-    const getBalance = async () => {
-        axios.post(`${config.baseURL}/account-blance.php`, {
-            token: userState.token,
-            email: userState.email,
-        }).then(async (response) => {
-            setbalance(await response.data)
-        })
-    }
-
-    const withdrawRequest = () => {
-        axios.post(`${config.baseURL}/request-withdraw.php`, {
+    const withdrawRequest = async () => {
+        setloader(await 1)
+        await axios.post(`${config.baseURL}/request-withdraw.php`, {
             token: userState.token,
             email: userState.email,
         }).then(async (response) => {
@@ -52,35 +44,29 @@ function Withdraw() {
                 swal(response.data.data)
             }
         })
+
+        setloader(await 0)
     }
 
     const getHistory = async () => {
         sethistory([])
-        axios.post(`${config.baseURL}/get-history.php`, {
+        axios.post(`${config.baseURL}/get-withdraw-history.php`, {
             token: userState.token,
             email: userState.email,
         }).then(async (response) => {
-            let response_data = response.data
-            let tempArr = []
-            response_data.forEach(element => {
-                tempArr.push(
-                    { date: element.history.created_at, id: "#" + element.history.id, billing_name: element.user.name, amount: element.plan.amount, payment_status: element.history.status == 1 ? "Payed" : "Canceled" },
-                )
+            response.data.forEach((element, index) => {
+                if (response.data[index].status == 1) {
+                    response.data[index].status = 'Pending'
+                } else {
+                    response.data[index].status = 'Approved'
+                }
             });
-            // sethistory(tempArr)
+            sethistory(response.data)
         })
     }
 
-    const copytoClipboard = (code) => {
-        navigator.clipboard.writeText(code)
-        alert('Link copy to clipboard')
-    }
-
-
-    const host = window.location.origin
 
     useEffect(() => {
-        getBalance()
         getHistory()
     }, [])
 
@@ -113,8 +99,18 @@ function Withdraw() {
                                                     <div className="col-lg-12 col-12  px-0">
                                                         <div className="card ws-card px-3 py-3 mb-4 d-flex flex-column">
                                                             <div className="d-flex pb-4 justify-content-between">
-                                                                <span className='fs-6  '>Withdrawls</span>
-                                                                <button onClick={() => withdrawRequest()} className="btn btn-success text-capitalize fw-400 py-2 px-3" style={{ color: ' #fff', backgroundColor: '#45cb85' }}>Request Withdraw</button>
+                                                                <span className='fs-6 text-faded '>Withdrawls</span>
+                                                                <button onClick={() => withdrawRequest()} className="btn btn-success text-capitalize fw-400 py-2 px-3" style={{ color: ' #fff', backgroundColor: '#45cb85' }}>
+                                                                    Request Withdraw
+                                                                    {
+                                                                        loader == 1 &&
+                                                                        <>
+                                                                            <div class="spinner-border spinner-border-sm ms-2" role="status">
+                                                                                <span class="visually-hidden">Loading...</span>
+                                                                            </div>
+                                                                        </>
+                                                                    }
+                                                                </button>
                                                             </div>
                                                             <Box sx={{ height: 500, width: '100%' }}>
                                                                 <DataGrid

@@ -10,12 +10,8 @@ import { logout, selectUser } from '../../features/userSlice';
 export default function Header() {
 
     const history = useHistory();
-    const [state, setstate] = useState(false);
-    const [mode, setmode] = useState(0);
-    const [isToggle, setToggle] = useState(false);
-    // const i = document.querySelector('.hello');
-
-    const userState = useSelector(selectUser)
+  
+    const userState = useSelector(selectUser);
 
     const dispatch = useDispatch()
 
@@ -23,45 +19,18 @@ export default function Header() {
     //     setToggle(!isToggle);
     // };
 
-    // const changevalueonScroll = () => {
-
-    //     const scrollvalue = document.documentElement.scrollTop;
-    //     if (scrollvalue > 20 && i.style.backgroundColor == "rgb(18, 26, 109)") {
-    //         setstate(true);
-    //         i.style.backgroundColor = 'rgb(18, 26, 109)';
-    //     }
-    //     else {
-    //         setstate(false);
-    //         i.style.backgroundColor = 'hsla(120,100%,50%,0);';
-    //         console.log('cannot perform this action');
-
-    //     }
-    // }
-    // window.addEventListener('scroll', changevalueonScroll);
-    const myFunc1 = () => {
-        //     // document.querySelector('.hello').style.backgroundColor = '#121a6d';
-        //     const i = document.querySelector('.hello');
-        //     const scrollvalue = document.documentElement.scrollTop;
-        //     if (scrollvalue < 50 || i.style.backgroundColor == 'rgb(18, 26, 109)') {
-        //         i.style.backgroundColor = 'hsla(120,100%,50%,0);'
-        //         // i.style.backgroundColor = 'transparent';
-
-
-        //     }
-        //     else {
-        //         i.style.backgroundColor = 'rgb(18, 26, 109)';
-
-        //     }
-    }
+   
+    // className={state = false ? "header nav-fixed header_wrap fixed-top py-lg-2 hello w-100" : "  header header_wrap fixed-top pt-0 pb-0 w-100"}
+    
     // "header_wrap fixed-top pt-lg-4"
     return (
         <>
 
-            <header className={state ? "header nav-fixed header_wrap fixed-top py-lg-2 hello w-100" : "  header header_wrap fixed-top pt-0 pb-0 w-100"}>
+            <header className="header nav-fixed header_wrap fixed-top py-lg-2 hello w-100" >
                 <Container fluid>
                     <Navbar id="mynav" className="navbar" expand="lg">
                         <Navbar.Brand className="navbar-brand page-scroll animation animated fadeInDown"><img src={process.env.PUBLIC_URL + "assets/images/cryptoskky-logo.png"} alt="" onClick={() => history.push('/')} /></Navbar.Brand>
-                        <div onClick={myFunc1}>
+                        <div >
                             <Navbar.Toggle aria-controls="basic-navbar-nav" className="navbar-toggler animation animated fadeInDown" data-animation="fadeInDown" data-animation-delay="1.1s" style={{ animationDelay: '1.1s', opacity: 1 }}>
                                 <span className="ion-android-menu" />
                             </Navbar.Toggle>
@@ -122,7 +91,7 @@ export default function Header() {
                                     }
 
                                 </li>
-                                <li className='ms-1'>
+                                {/* <li className='ms-1'>
                                     <div class="toogle-mode" onClick={()=>setmode(!mode)}>
                                         {
                                             mode == 1 ?
@@ -131,7 +100,7 @@ export default function Header() {
                                                 <i className="fa fa-moon"></i>
                                         }
                                     </div>
-                                </li>
+                                </li> */}
                             </ul>
                         </Navbar.Collapse>
                     </Navbar>

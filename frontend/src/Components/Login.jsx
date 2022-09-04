@@ -142,7 +142,7 @@ export default function Login() {
               </div>
               <div className="divider small_divider" />
               <div className="text-center">
-                <span className="animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.6s" style={{ animationDelay: '0.6s', opacity: 1 }}>Don't have an account?<Link to='/register'> Register</Link></span>
+                <span className="animation animated fadeInUp" data-animation="fadeInUp" data-animation-delay="0.6s" style={{ animationDelay: '0.6s', opacity: 1 }}>Don't have an account?<Link to='/register/refer'> Register</Link></span>
               </div>
             </div>
           </div>

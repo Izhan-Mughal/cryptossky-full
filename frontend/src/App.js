@@ -20,6 +20,9 @@ import About from './Components/About';
 import Invest from './Components/Invest';
 import Verify from './Components/Verify';
 import Review from './Components/dashboard/Review';
+import TransInvoice from './Components/dashboard/TransInvoice';
+import Refer from './Components/dashboard/Refer';
+import ChangePass from './Components/ChangePass';
 
 function App() {
 
@@ -69,7 +72,8 @@ function App() {
           <Route exact path='/forget'>
             <Forget />
           </Route>
-          <Route exact path='/register'>
+          {/* refer=37354770 */}
+          <Route  path='/register' >
             <Register />
           </Route>
           <Route exact path='/deposit'>
@@ -86,6 +90,23 @@ function App() {
                 <Transaction />
                 :
                 <Redirect to='/' />
+            }
+          </Route>
+          <Route exact path='/refer'>
+            {
+              userState?.loginStatus == 2 ?
+                <Refer />
+                :
+                <Redirect to='/' />
+            }
+          </Route>
+          <Route exact path='/password'>
+            {
+              userState?.loginStatus == 2 ?
+                
+              <Redirect to='/' />
+                :
+                <ChangePass />
             }
           </Route>
           <Route exact path='/profile'>
@@ -108,6 +129,14 @@ function App() {
             {
               userState?.loginStatus == 2 ?
                 <Withdraw />
+                :
+                <Redirect to='/' />
+            }
+          </Route>
+          <Route exact path='/invoice'>
+            {
+              userState?.loginStatus == 2 ?
+                <TransInvoice />
                 :
                 <Redirect to='/' />
             }

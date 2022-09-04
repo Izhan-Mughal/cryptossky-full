@@ -70,6 +70,7 @@ function Dashboard() {
     useEffect(() => {
         getBalance()
         getHistory()
+        getUser()
     }, [])
 
     const [theme, settheme] = useState(0)
@@ -77,7 +78,24 @@ function Dashboard() {
     function setmytheme() {
         settheme(!theme)
     }
-
+    const [profile, setProfile] = useState({
+        refrence: "",
+    
+    });
+    const [userinfo, setuserinfo] = useState([])
+    const getUser = async () => {
+        axios.post(`${config.baseURL}/get-user-info.php`, {
+            token: userState.token,
+            email: userState.email,
+        }).then(async (response) => {
+            setuserinfo(await response.data)
+            // setProfile({
+            //     refrence:response.data.user_reference 
+                
+            // })
+     
+        })
+    }
     return (
         <div className={modeState == 0 ? 'light-dashboard-body' : 'dark-dashboard-body'}>
             <div class="dashboard-body">
@@ -144,9 +162,10 @@ function Dashboard() {
                                                             consectetur adipisicing elit. In perspiciatis dolorum ex architecto
                                                             consectetur adipisicing elit. In perspiciatis dolorum ex architecto
                                                             maxime hic sapiente cum temporibus consequuntur atque.</span>
+                                                            {/* <p>p {userinfo?.user_reference}</p> */}
                                                         <div className="d-flex align-items-center refer-code">
-                                                            <span class="ps-2">{host}/register?refer={balance?.refer_code}</span>
-                                                            <button className='btn-3 py-1 ms-3' onClick={() => copytoClipboard(host + '/register?refer=' + balance?.refer_code)} > <i className="fa fa-copy"></i> Copy Refer Code</button>
+                                                            <span class="ps-2">{host}/register?ref={userinfo?.user_reference}</span>
+                                                            <button className='btn-3 py-1 ms-3' onClick={() => copytoClipboard(host + '/register?ref=' + userinfo?.user_reference)} > <i className="fa fa-copy"></i> Copy Refer Code</button>
                                                         </div>
                                                     </div>
                                                 </div>

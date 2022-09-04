@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 function SidebarDashboard() {
     return (
         <div className='ws-sidebar pt-2 pb-5 py-0 d-flex flex-column'>
-            <span className='fs-8 ps-3'>MENU</span>
+            <span className='fs-8 text-faded ps-3'>MENU</span>
             <div class="ws-sidebar-menu" id="side-menu">
                 <li>
                     <Link to="dashboard" class="waves-effect ">
@@ -42,10 +42,12 @@ function SidebarDashboard() {
                 </li>
 
                 <li>
+                    <Link  to="refer" class="waves-effect active">
                     <a class=" waves-effect">
                         <i class="mdi mdi-account-multiple-outline"></i>
                         <span>Referral</span>
                     </a>
+                    </Link>
                 </li>
 
                 <li>

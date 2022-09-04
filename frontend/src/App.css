@@ -10744,3 +10744,34 @@ select.form-control {
 	color: white;
 	background-color: #ffffff45;
 }
+/* .MuiDataGrid-virtualScrollerContent{
+    background-color:white !important ;
+	color: white !important;
+}
+.css-1jbbcbn-MuiDataGrid-columnHeaderTitle {
+   color: var(--text-color- ) !important;
+}
+.css-r11z79-MuiDataGrid-root {
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    box-sizing: border-box;
+    position: relative;
+    border: none !important;
+    border-radius: 4px;
+    color: rgba(0, 0, 0, 0.87);
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+    font-weight: 400;
+    font-size: 0.875rem;
+    line-height: 1.43;
+    letter-spacing: 0.01071em;
+    outline: none;
+    height: 100%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+} */

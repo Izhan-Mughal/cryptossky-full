@@ -9,7 +9,7 @@ import { selectUser } from '../../features/userSlice';
 import axios from 'axios';
 import config from '../../config'
 import { selectMode } from '../../features/modeSlice';
-// import Web3 from 'web3';
+import swal from 'sweetalert';
 
 const columns = [
   { field: 'date', headerName: 'Date', width: 170 },
@@ -28,6 +28,7 @@ function Deposite() {
 
   const [plans, setplans] = useState([])
   const [history, sethistory] = useState([])
+  const [checkPlans, setcheckPlans] = useState([])
   const [selectPlan, setSelectPlan] = useState("")
   const [planPrice, setPlanPrice] = useState("")
   const [wallet, setwallet] = useState("")
@@ -165,7 +166,7 @@ function Deposite() {
 
   if (window.ethereum) {
     window.ethereum.on('chainChanged', (chainId) => {
-      if (chainId != '0x1') {
+      if (chainId != '0x1' && checkPlans.length == 0) {
         showAlert(true, 'danger', 'Change your network to Mainnet')
       } else {
         showAlert(false)
@@ -174,13 +175,21 @@ function Deposite() {
   }
 
   const detectChain = (chain = null) => {
-    if (window.ethereum.networkVersion != '1') {
+    if (window.ethereum.networkVersion != '1' && checkPlans.length == 0) {
       showAlert(true, 'danger', 'Change your network to Mainnet')
     } else {
       showAlert(false)
     }
   }
 
+  const getCheckPlans = () => {
+    axios.post(`${config.baseURL}/check-plans.php`, {
+      token: userState.token,
+      email: userState.email,
+    }).then(async (response) => {
+      setcheckPlans(await response.data)
+    })
+  }
 
   const showAlert = (state, variant = "", text = "",) => {
     seterror({
@@ -190,10 +199,12 @@ function Deposite() {
     })
   }
 
+
   useEffect(() => {
     getPlans()
     getHistory()
     getAdminAddress()
+    getCheckPlans()
   }, [])
 
   return (
@@ -220,15 +231,17 @@ function Deposite() {
                   <div className="w-100">
                     <div className="card ws-card mb-4" bis_skin_checked={1}>
                       <div className="card-body p-4" bis_skin_checked={1}>
-                        <h4 className="mb-3 text-dark text-faded">New Deposits</h4>
+                        <h4 className="mb-3  text-faded">New Deposits</h4>
                         <div>
-                          <h5 className="mb-3 text-dark text-faded">Account Information</h5>
                           {
-                            error.state && < div class={"alert alert-" + error.variant} role="alert">{error.text}</div>
+                            (error.state && checkPlans.length == 0) && < div class={"alert alert-" + error.variant} role="alert">{error.text}</div>
+                          }
+                          {
+                            checkPlans.length > 0 && < div class="alert alert-info" role="alert">You already buy {checkPlans[0].title} plan will expire in {checkPlans[0].left_days} days</div>
                           }
                           <div className="row" bis_skin_checked={1}>
                             <div className="col-md-12 mb-3" bis_skin_checked={1}>
-                              <label className="form-label">Select Plan</label>
+                              <label className="form-label text-faded">Select Plan</label>
                               <select onChange={(e) => setSelectPlan(e.target.value)} className="form-control select2 select2-hidden-accessible" data-select2-id={1} tabIndex={-1} aria-hidden="true">
                                 {
                                   plans.map((element, index) => {
@@ -241,7 +254,7 @@ function Deposite() {
                             </div>
                             <div className="col-md-12" bis_skin_checked={1}>
                               <div className="mb-3" bis_skin_checked={1}>
-                                <label className="form-label">Amount</label>
+                                <label className="form-label  text-faded">Amount</label>
                                 <input className="form-control" required type="text" disabled value={planPrice} />
                               </div>
                             </div>
@@ -256,7 +269,10 @@ function Deposite() {
                         </div> */}
                           <div className="row" bis_skin_checked={1}>
                             <div className="col-md-6" bis_skin_checked={1}>
-                              <button onClick={() => formSubmit()} className="btn btn-success waves-effect waves-light ws-btn-1">{walletBtn}</button>
+                              {
+                                checkPlans.length == 0 &&
+                                <button onClick={() => formSubmit()} className="btn btn-success waves-effect waves-light ws-btn-1">{walletBtn}</button>
+                              }
                             </div>
                           </div>
                         </div>

@@ -195,20 +195,20 @@ function Profile() {
                                                                 }
                                                                 <input type="file" id="imageInp" onChange={e => handelFile(e)} name="image" style={{ display: "none" }} />
                                                             </div>
-                                                            <h6 className='mt-4 text-dark text-capitalize text-center'>{userinfo?.name}</h6>
+                                                            <h6 className='mt-4 text-faded text-capitalize text-center'>{userinfo?.name}</h6>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div className="card ws-card p-2 mb-4">
                                                     <div className="card-body py-1 ">
                                                         <div className="w-100 d-flex flex-column ">
-                                                            <span className=' text-dark'>Personal Information</span>
+                                                            <span className=' text-faded'>Personal Information</span>
                                                             <span className='fs-8 mt-3 text-faded' style={{ lineHeight: "10px" }}>Email Address</span>
-                                                            <span className=' fs-7 text-dark'>{userinfo?.email}</span>
+                                                            <span className=' fs-7 text-faded'>{userinfo?.email}</span>
                                                             <span className='fs-8 mt-3 text-faded' style={{ lineHeight: "10px" }}>Name</span>
-                                                            <span className=' fs-7 text-dark'>{userinfo?.name}</span>
+                                                            <span className=' fs-7 text-faded'>{userinfo?.name}</span>
                                                             <span className='fs-8 mt-3 text-faded' style={{ lineHeight: "10px" }}>Phone number</span>
-                                                            <span className=' fs-7 text-dark'>{userinfo?.phone}</span>
+                                                            <span className=' fs-7 text-faded'>{userinfo?.phone}</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -261,7 +261,7 @@ function Profile() {
                                                             <div className="card-body p-3" >
                                                                 {/* <h4 className="mb-3  text-faded">New Deposits</h4> */}
                                                                 <div>
-                                                                    <h5 className="mb-3  text-faded">Personal Information</h5>
+                                                                    <h5 className="mb-3 text-faded">Personal Information</h5>
 
                                                                     {error != "" &&
                                                                         <div className={"alert alert-" + error.variant} role="alert">

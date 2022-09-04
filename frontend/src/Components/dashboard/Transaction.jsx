@@ -12,11 +12,11 @@ import { selectMode } from '../../features/modeSlice';
 // import Web3 from 'web3';
 
 const columns = [
-  { field: 'date', headerName: 'Date', width: 170 },
-  { field: 'id', headerName: 'Id no.', width: 170 },
+  { field: 'id', headerName: 'Id no.', width: 160 },
   { field: 'billing_name', headerName: 'Billing Name', width: 170 },
   { field: 'amount', headerName: 'Amount', width: 170 },
   { field: 'payment_status', headerName: 'Payment Status', width: 170 },
+  { field: 'date', headerName: 'Date', width: 150 },
 ];
 
 
@@ -39,6 +39,7 @@ function Transaction() {
       email: userState.email,
     }).then(async (response) => {
       let response_data = response.data
+      console.log(response_data)
       let tempArr = []
       response_data.forEach(element => {
         tempArr.push(
@@ -48,6 +49,24 @@ function Transaction() {
       sethistory(tempArr)
     })
   }
+
+  // const getHistory = async () => {
+  //   sethistory([])
+  //   axios.post(`${config.baseURL}/get-review.php`, {
+  //     token: userState.token,
+  //     email: userState.email,
+  //   }).then(async (response) => {
+  //     let response_data = response.data
+  //     console.log(response_data)
+  //     // let tempArr = []
+  //     // response_data.forEach(element => {
+  //     //   tempArr.push(
+  //     //     { date: element.history.created_at, id: "#" + element.history.id, billing_name: element.user.name, amount: element.plan.amount, payment_status: element.history.status == 1 ? "Payed" : "Canceled" },
+  //     //   )
+  //     // });
+  //     // sethistory(tempArr)
+  //   })
+  // }
 
 
 
@@ -81,6 +100,7 @@ function Transaction() {
                       <div className="card-body p-4" bis_skin_checked={1}>
                         <Box sx={{ height: 700, width: '100%' }}>
                           <DataGrid
+
                             rows={history}
                             columns={columns}
                             pageSize={12}

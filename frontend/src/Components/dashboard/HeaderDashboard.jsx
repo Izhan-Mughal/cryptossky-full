@@ -1,12 +1,13 @@
-import {useState,useEffect} from 'react'
+import { useState, useEffect } from 'react'
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom'
 import { logout, selectUser } from '../../features/userSlice';
-import { toogle,selectMode } from '../../features/modeSlice';
-
+import { toogle, selectMode } from '../../features/modeSlice';
+import axios from 'axios';
+import config from '../../config';
 
 function HeaderDashboard(props) {
   const [mode, setmode] = useState(0);
@@ -14,6 +15,22 @@ function HeaderDashboard(props) {
   const dispatch = useDispatch();
 
   const modeState = useSelector(selectMode)
+
+  const [userinfo, setuserinfo] = useState([])
+
+  const getUser = async () => {
+    axios.post(`${config.baseURL}/get-user-info.php`, {
+      token: userState.token,
+      email: userState.email,
+    }).then(async (response) => {
+      setuserinfo(await response.data)
+    })
+  }
+
+  useEffect(() => {
+    getUser()
+  }, [])
+
 
 
   return (
@@ -28,7 +45,19 @@ function HeaderDashboard(props) {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto align-items-center">
 
-              <NavDropdown title={<><img src="/assets/images/user_img.png" className='ws-avater' alt="" /><span className='ws-avater-name'>{userState?.email}</span></>} id="basic-nav-dropdown">
+              <NavDropdown title={
+                userinfo?.image != null ?
+                  <>
+                    <img className='ws-avater' src={`${config.baseURL}/images/${userinfo?.image}`} alt="" />
+                    <span className='ws-avater-name'>{userState?.email}</span>
+                  </>
+                  :
+                  <>
+                    <img className='ws-avater' src="assets/images/user_img.png" alt="" />
+                    <span className='ws-avater-name'>{userState?.email}</span>
+                  </>
+              }
+                id="basic-nav-dropdown">
                 <li class="dropdown-item pointer" onClick={() => dispatch(logout())}>Logout</li>
               </NavDropdown>
               <li className='ms-1'>
